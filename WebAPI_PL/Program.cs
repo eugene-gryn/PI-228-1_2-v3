@@ -1,9 +1,12 @@
+using BLL;
+
 namespace WebAPI_PL
 {
     public class Program
     {
         public static void Main(string[] args)
         {
+            new TestWorker();
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
