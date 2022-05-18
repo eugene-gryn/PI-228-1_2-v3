@@ -6,43 +6,41 @@
     <main>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">Kursach E-Commerce</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <a class="navbar-brand p-2" href="#">Kursach E-Commerce</a>
+                <button class="navbar-toggler shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <li class="nav-item dropdown m-2" style="min-width: 10rem">
+                            <a class="nav-link dropdown-toggle btn btn-warning shadow-none" style="width: 100%" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Каталог
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">Каталог 1</a></li>
-                                <li><a class="dropdown-item" href="#">Каталог 2</a></li>
-                                <li><a class="dropdown-item" href="#">Каталог 3</a></li>
-                                <li><a class="dropdown-item" href="#">Каталог 4</a></li>
+                                <li><a class="dropdown-item shadow-none" href="#">Каталог 1</a></li>
+                                <li><a class="dropdown-item shadow-none" href="#">Каталог 2</a></li>
+                                <li><a class="dropdown-item shadow-none" href="#">Каталог 3</a></li>
+                                <li><a class="dropdown-item shadow-none" href="#">Каталог 4</a></li>
                             </ul>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#" tabindex="-1" aria-disabled="true">Про нас</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#" tabindex="-1" aria-disabled="true">Контакти</a>
-                        </li>
                     </ul>
-                    <form class="d-flex">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit">Search</button>
-                    </form>
-                    
-                    <form class="d-flex">
-                        <a class="nav-link" href="#" tabindex="-1" aria-disabled="true">Кошик</a>
-                    </form> 
 
-                    <form class="d-flex">
-                        <a class="nav-link" href="#" tabindex="-1" aria-disabled="true">Кабінет</a>
-                        <a class="nav-link" href="#" tabindex="-1" aria-disabled="true">Реєстрація</a>
+                    <form class="d-flex m-2 w-100">
+                        <input style="min-width: 100px" class="form-control me-2 shadow-none" type="search" placeholder="Пошук серед товарів..." aria-label="Search">
+                        <button class="btn nav-search-button shadow-none" type="submit">Пошук</button>
                     </form>
+
+                    <a class="d-inline-block mx-2 nav-link" href="#" tabindex="-1" aria-disabled="true">
+                        <form class="d-flex justify-content-center">
+                            <img class="mx-1" src="src/cart.svg" style="width: 20px"/>
+                            <p class="m-0 mx-1">Корзина</p>
+                        </form>
+                    </a>
+
+
+                    <a class="nav-link m-2" href="#" tabindex="-1" aria-disabled="true">Кабінет</a>
+                    <a class="nav-link m-2" href="#" tabindex="-1" aria-disabled="true">Реєстрація</a>
+                    <a class="nav-link m-2" href="#" tabindex="-1" aria-disabled="true">Контакти</a>
 
                 </div>
             </div>

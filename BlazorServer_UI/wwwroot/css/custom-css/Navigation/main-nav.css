@@ -1,0 +1,37 @@
+﻿:root {
+    --nav-bg: #f3fa9a;
+    --nav-link: #5f9ea0;
+    --nav-hover: #000000;
+}
+
+
+
+
+.dropdown-item:focus, .dropdown-item:hover {
+    color: var(--nav-hover);
+    background-color: var(--nav-bg);
+}
+
+.nav-link {
+    color: var(--nav-link);
+    border-radius: .2rem;
+}
+
+.nav-link:hover {
+    color: var(--nav-hover);
+    background-color: var(--nav-bg);
+}
+
+.navbar-brand:hover {
+    background-color: var(--nav-bg);
+}
+
+.nav-search-button {
+    background-color: transparent;
+    border: 3px solid var(--nav-bg);
+}
+
+.nav-search-button:hover {
+    background-color: var(--nav-bg);
+    border-color: transparent;
+}
