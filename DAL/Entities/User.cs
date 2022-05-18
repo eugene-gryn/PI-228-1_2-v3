@@ -15,7 +15,7 @@ public class User
     public string Password { get; set; }
 
     public ICollection<Order> Orders { get; set; }
-    public ICollection<Product> Cart { get; set; }
+    public ICollection<ProductAmount> Cart { get; set; }
     
     public bool IsAdmin;
     public bool IsModer;
