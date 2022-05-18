@@ -18,6 +18,15 @@ public class MainContext : DbContext
         _dbPath = System.IO.Path.Join(folderPath, "shop.db");
     }
 
+
+    /*protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+        modelBuilder.Entity<Order>()
+            .HasOne(o => o.Products)
+            .WithMany(d => d);
+    }*/
+
     protected override void OnConfiguring(DbContextOptionsBuilder options)
         => options.UseSqlite($"Data Source={_dbPath}"); //TODO change to MS SQL
 }

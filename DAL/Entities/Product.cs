@@ -4,6 +4,7 @@ namespace DAL.Entities;
 
 public class Product
 {
+    [Key]
     public int ID { get; set; }
     [Required]
     public string Name { get; set; } = string.Empty;
@@ -11,4 +12,5 @@ public class Product
     public string Description { get; set; } = string.Empty;
     public float Price { get; set; }
     public int RemainingStock { get; set; }
+    
 }
