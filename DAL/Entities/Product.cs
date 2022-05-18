@@ -12,5 +12,8 @@ public class Product
     public string Description { get; set; } = string.Empty;
     public float Price { get; set; }
     public int RemainingStock { get; set; }
-    
+
+    public ICollection<Order> OrdersThatHaveThisProd { get; set; }
+    public ICollection<User> UsersThatHaveThisProdInCart { get; set; }
+
 }

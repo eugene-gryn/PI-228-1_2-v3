@@ -19,13 +19,16 @@ public class MainContext : DbContext
     }
 
 
-    /*protected override void OnModelCreating(ModelBuilder modelBuilder)
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        base.OnModelCreating(modelBuilder);
-        modelBuilder.Entity<Order>()
-            .HasOne(o => o.Products)
-            .WithMany(d => d);
-    }*/
+        modelBuilder
+            .Entity<Order>()
+            .HasMany(o => o.Products)
+            .WithMany(p => p.OrdersThatHaveThisProd)
+            .UsingEntity(j => j.ToTable("OrdersProducts")
+                //.HasData()
+            );
+    }
 
     protected override void OnConfiguring(DbContextOptionsBuilder options)
         => options.UseSqlite($"Data Source={_dbPath}"); //TODO change to MS SQL
