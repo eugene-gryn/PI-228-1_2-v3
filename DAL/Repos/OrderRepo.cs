@@ -1,5 +1,6 @@
 using DAL.EF;
 using DAL.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Repos;
 
@@ -14,22 +15,27 @@ public class OrderRepo : IRepository<Order>
 
     public void Create(Order item)
     {
-        throw new NotImplementedException();
+        item.ID = 0;
+        item.Processed = false; 
+
+        _mainContext.Add(item);
     }
 
     public IQueryable<Order> Read()
     {
-        throw new NotImplementedException();
+        return _mainContext.Orders.AsQueryable();
     }
     
 
     public void Update(Order item)
     {
-        throw new NotImplementedException();
+        _mainContext.Entry(item).State = EntityState.Modified;
     }
 
     public void Delete(int id)
     {
-        throw new NotImplementedException();
+        var o = _mainContext.Orders.Find(id);
+        if(o != null)
+            _mainContext.Orders.Remove(o);
     }
 }
