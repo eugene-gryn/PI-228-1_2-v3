@@ -26,7 +26,7 @@ public class TestWorker
                 Name = "TestUser",
                 Email = "test@email.com",
                 Password = "12345",
-                Cart = new List<ProductAmount>() {new ProductAmount() {Product = p1, Amount = 22}}
+                Cart = new List<ProductAmount>() {new ProductAmount() {Product = p1, Amount = 22}, new ProductAmount(){Product = p2, Amount = 55}}
             };
             context.Users.Add(u1);
             context.SaveChanges();
@@ -41,7 +41,7 @@ public class TestWorker
         
         using (var context = new MainContext())
         {
-            var user = context.Users.Include(u => u.Cart).First();
+            var user = context.Users.Include(u => u.Cart).ThenInclude(pa => pa.Product).First();
             Console.WriteLine($"Name: {user.Name}");
             
             var cart = user.Cart;
@@ -50,10 +50,10 @@ public class TestWorker
             Console.WriteLine($"Count in cart: {cart.Count}");
             
 
-            /*foreach (var p in cart)
+            foreach (var pa in cart)
             {
-                Console.WriteLine($"{p.Product.Name}: {p.Amount} шт.");
-            }*/
+                    Console.WriteLine($"    {pa.Product.Name}: {pa.Amount} шт.");
+            }
 
         }
         
