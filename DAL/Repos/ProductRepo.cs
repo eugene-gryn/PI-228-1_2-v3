@@ -1,5 +1,6 @@
 using DAL.EF;
 using DAL.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Repos;
 
@@ -16,21 +17,27 @@ public class ProductRepo : IRepository<Product>
 
     public void Create(Product item)
     {
-        throw new NotImplementedException();
+        item.ID = 0;
+        /* ????
+         * item.Price = 0f; 
+          item.RemainingStock = 0; */
     }
 
     public IQueryable<Product> Read()
     {
-        throw new NotImplementedException();
+        return _mainContext.Products.AsQueryable();
     }
+    
 
     public void Update(Product item)
     {
-        throw new NotImplementedException();
+        _mainContext.Entry(item).State = EntityState.Modified;
     }
 
     public void Delete(int id)
     {
-        throw new NotImplementedException();
+        var p = _mainContext.Products.Find(id);
+        if(p != null)
+            _mainContext.Products.Remove(p);
     }
 }
