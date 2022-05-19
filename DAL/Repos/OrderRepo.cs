@@ -21,21 +21,7 @@ public class OrderRepo : IRepository<Order>
     {
         throw new NotImplementedException();
     }
-
-    /*public IEnumerable<Order> GetAll()
-    {
-        throw new NotImplementedException();
-    }
-
-    public Order Get(int id)
-    {
-        throw new NotImplementedException();
-    }
-
-    public IEnumerable<Order> Find(Func<Order, bool> predicate)
-    {
-        throw new NotImplementedException();
-    }*/
+    
 
     public void Update(Order item)
     {

@@ -18,6 +18,7 @@ namespace WebAPI_PL.Controllers
             _logger = logger;
         }
 
+        
         [HttpGet]
         [Route("Product100")]
         public async Task<ActionResult<IEnumerable<TestProduct>>> GetProducts100()
@@ -32,6 +33,8 @@ namespace WebAPI_PL.Controllers
                         3))
                 .ToArray());
         }
+        
+        
         [HttpGet]
         [Route("Product200")]
         public async Task<ActionResult<IEnumerable<TestProduct>>> GetProducts200()
@@ -47,6 +50,7 @@ namespace WebAPI_PL.Controllers
                 .ToArray());
         }
 
+        
         [HttpGet("{id}")]
         public async Task<ActionResult<TestProduct>> Get(int id)
         {
@@ -58,6 +62,7 @@ namespace WebAPI_PL.Controllers
                 id + 10));
         }
 
+        
         [HttpPost]
         public async Task<ActionResult<TestProduct>> Post(TestProduct testProduct)
         {
@@ -66,6 +71,8 @@ namespace WebAPI_PL.Controllers
 
             return Ok(testProduct);
         }
+        
+        
         [HttpPut]
         public async Task<ActionResult<TestProduct>> Put(TestProduct testProduct)
         {
@@ -74,6 +81,8 @@ namespace WebAPI_PL.Controllers
 
             return Ok(testProduct);
         }
+        
+        
         [HttpDelete]
         public async Task<ActionResult<TestProduct>> Delete(TestProduct testProduct)
         {

@@ -1,9 +1,13 @@
 using BLL.DTOs.User;
 using BLL.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI_PL.Controllers;
 
+[Route("api/users")]
+[ApiController]
+[Authorize]
 public class UserController : ControllerBase
 {
     private readonly ILogger<UserController> _logger;
@@ -15,9 +19,24 @@ public class UserController : ControllerBase
         _logger = logger;
         _userS = userService;
     }
-    
-    
-    [HttpGet("{id}")]
+
+
+    [HttpPost, AllowAnonymous]
+    //[Route("api/users/register")]
+    public async Task<ActionResult<UserMainDataDTO>> Register(UserRegisterDTO registerDto)
+    {
+        if (await _userS.GetMainData(registerDto.Email)!=null)
+        {
+            return Problem("User with such email already exists!");
+        }
+        var updatedDTO = await _userS.Create(registerDto);
+        
+        return Ok(updatedDTO);
+    }
+
+
+    [HttpGet("{id:int}", Name = "GetUserByID")]
+    //[Route("findByID")]
     public async Task<ActionResult<UserMainDataDTO>> GetMainData(int id)
     {
         _logger.LogInformation("[GetMainData] call");
@@ -29,5 +48,20 @@ public class UserController : ControllerBase
         }
         return Ok(dto);
     }
-    
+
+    [HttpGet("{email}", Name = "GetUserByEmail")]
+    //[Route("findByEmail")]
+    public async Task<ActionResult<UserMainDataDTO>> GetMainData(string email)
+    {
+        _logger.LogInformation("[GetMainData] call");
+        var dto = await _userS.GetMainData(email);
+
+        if (dto == null)
+        {
+            return BadRequest("Bad user email.");
+        }
+
+        return Ok(dto);
+    }
+
 }

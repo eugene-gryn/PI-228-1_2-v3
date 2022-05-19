@@ -1,7 +1,12 @@
+using System.Text;
 using BLL;
 using BLL.Services;
 using DAL.EF;
 using DAL.UOW;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Filters;
 
 namespace WebAPI_PL
 {
@@ -15,15 +20,38 @@ namespace WebAPI_PL
 
             // Add services to the container.
 
+
             builder.Services.AddControllers();
+            
+            builder.Services.AddSwaggerGen(options =>
+            {
+                options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme()
+                {
+                    Description = "Standard Authorization header using Bearer scheme (\"bearer {token}\")",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey
+                });
+                
+                options.OperationFilter<SecurityRequirementsOperationFilter>();
+            });
+            
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                    options.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("AppSettings:Token").Value)),
+                        ValidateIssuer = false,
+                        ValidateAudience = false
+                    });
 
             builder.Services.AddDbContext<MainContext>();
             builder.Services.AddScoped<IUnitOfWork, EFUnitOfWork>();
             builder.Services.AddScoped<UserService>();
-            
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
 
@@ -36,6 +64,7 @@ namespace WebAPI_PL
 
             app.UseHttpsRedirection();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllers();

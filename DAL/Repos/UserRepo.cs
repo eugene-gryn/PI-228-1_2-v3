@@ -1,6 +1,7 @@
 using DAL.EF;
 using DAL.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace DAL.Repos;
 
@@ -15,6 +16,10 @@ public class UserRepo : IRepository<User>
 
     public void Create(User item)
     {
+        item.ID = 0;
+        item.IsAdmin = false;
+        item.IsModer = false;
+
         _mainContext.Add(item);
     }
 
@@ -22,21 +27,6 @@ public class UserRepo : IRepository<User>
     {
         return _mainContext.Users.AsQueryable();
     }
-
-    /*public IEnumerable<User> GetAll()
-    {
-        return _mainContext.Users;
-    }
-
-    public IQueryable<User> Ку(int id)
-    {
-        return _mainContext.Users.AsQueryable();
-    }
-
-    public IEnumerable<User> Find(Func<User, bool> predicate)
-    {
-        return _mainContext.Users.Where(predicate).ToList();
-    }*/
 
     public void Update(User item)
     {

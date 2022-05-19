@@ -16,6 +16,8 @@ public class MainProfile : Profile
         */
 
         CreateMap<User, UserMainDataDTO>();
+        CreateMap<UserMainDataDTO, User>();
+        CreateMap<UserRegisterDTO, User>();
 
 
     }

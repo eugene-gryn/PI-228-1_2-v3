@@ -1,4 +1,5 @@
 using BLL.DTOs.User;
+using DAL.Entities;
 using DAL.UOW;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,18 +9,27 @@ public class UserService : AService
 {
     public UserService(IUnitOfWork uow) : base(uow) { }
     
-    //get user mainData
+    //get user mainData by id/email
     //get user orders
     //get user cart
     
     //bool validate email/id-pass pair
     
-    //create
-    //add
+    //create / register
     //delete
 
-    
-    
+
+    public async Task<UserMainDataDTO?> Create(UserRegisterDTO registerDto)
+    {
+        var user = Mapper.Map<User>(registerDto);
+
+        Database.Users.Create(user);
+        Database.Save();
+
+        return await GetMainData(user.Email);
+    }
+
+
 
     public async Task<UserMainDataDTO?> GetMainData(int userID)
     {
