@@ -1,9 +1,17 @@
+using DAL.EF;
 using DAL.Entities;
 
 namespace DAL.Repos;
 
 public class OrderRepo : IRepository<Order>
 {
+    private readonly MainContext _mainContext;
+    
+    public OrderRepo(MainContext mainContext)
+    {
+        _mainContext = mainContext;
+    }
+
     public void Create(Order item)
     {
         throw new NotImplementedException();

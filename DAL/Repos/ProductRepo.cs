@@ -1,28 +1,40 @@
+using DAL.EF;
+using DAL.Entities;
+
 namespace DAL.Repos;
 
-public class ProductRepo : IRepository<ProductRepo>
+public class ProductRepo : IRepository<Product>
 {
-    public void Create(ProductRepo item)
+    
+    private readonly MainContext _mainContext;
+    
+    public ProductRepo(MainContext mainContext)
+    {
+        _mainContext = mainContext;
+    }
+
+
+    public void Create(Product item)
     {
         throw new NotImplementedException();
     }
 
-    public IEnumerable<ProductRepo> GetAll()
+    public IEnumerable<Product> GetAll()
     {
         throw new NotImplementedException();
     }
 
-    public ProductRepo Get(int id)
+    public Product Get(int id)
     {
         throw new NotImplementedException();
     }
 
-    public IEnumerable<ProductRepo> Find(Func<ProductRepo, bool> predicate)
+    public IEnumerable<Product> Find(Func<Product, bool> predicate)
     {
         throw new NotImplementedException();
     }
 
-    public void Update(ProductRepo item)
+    public void Update(Product item)
     {
         throw new NotImplementedException();
     }
