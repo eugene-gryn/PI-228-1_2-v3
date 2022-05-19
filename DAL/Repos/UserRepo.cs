@@ -1,5 +1,6 @@
 using DAL.EF;
 using DAL.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Repos;
 
@@ -14,31 +15,38 @@ public class UserRepo : IRepository<User>
 
     public void Create(User item)
     {
-        throw new NotImplementedException();
+        _mainContext.Add(item);
     }
 
-    public IEnumerable<User> GetAll()
+    public IQueryable<User> Read()
     {
-        throw new NotImplementedException();
+        return _mainContext.Users.AsQueryable();
     }
 
-    public User Get(int id)
+    /*public IEnumerable<User> GetAll()
     {
-        throw new NotImplementedException();
+        return _mainContext.Users;
+    }
+
+    public IQueryable<User> Ку(int id)
+    {
+        return _mainContext.Users.AsQueryable();
     }
 
     public IEnumerable<User> Find(Func<User, bool> predicate)
     {
-        throw new NotImplementedException();
-    }
+        return _mainContext.Users.Where(predicate).ToList();
+    }*/
 
     public void Update(User item)
     {
-        throw new NotImplementedException();
+        _mainContext.Entry(item).State = EntityState.Modified; //TODO may be wrong
     }
 
     public void Delete(int id)
     {
-        throw new NotImplementedException();
+        var p = _mainContext.Users.Find(id);
+        if (p != null)
+            _mainContext.Users.Remove(p);
     }
 }

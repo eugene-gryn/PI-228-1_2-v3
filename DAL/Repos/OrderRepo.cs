@@ -17,7 +17,12 @@ public class OrderRepo : IRepository<Order>
         throw new NotImplementedException();
     }
 
-    public IEnumerable<Order> GetAll()
+    public IQueryable<Order> Read()
+    {
+        throw new NotImplementedException();
+    }
+
+    /*public IEnumerable<Order> GetAll()
     {
         throw new NotImplementedException();
     }
@@ -30,7 +35,7 @@ public class OrderRepo : IRepository<Order>
     public IEnumerable<Order> Find(Func<Order, bool> predicate)
     {
         throw new NotImplementedException();
-    }
+    }*/
 
     public void Update(Order item)
     {

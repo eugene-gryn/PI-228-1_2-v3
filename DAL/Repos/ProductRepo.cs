@@ -19,7 +19,12 @@ public class ProductRepo : IRepository<Product>
         throw new NotImplementedException();
     }
 
-    public IEnumerable<Product> GetAll()
+    public IQueryable<Product> Read()
+    {
+        throw new NotImplementedException();
+    }
+
+    /*public IEnumerable<Product> GetAll()
     {
         throw new NotImplementedException();
     }
@@ -32,7 +37,7 @@ public class ProductRepo : IRepository<Product>
     public IEnumerable<Product> Find(Func<Product, bool> predicate)
     {
         throw new NotImplementedException();
-    }
+    }*/
 
     public void Update(Product item)
     {
