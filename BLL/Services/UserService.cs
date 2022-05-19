@@ -1,5 +1,6 @@
 using BLL.DTOs.User;
 using DAL.UOW;
+using Microsoft.EntityFrameworkCore;
 
 namespace BLL.Services;
 
@@ -20,9 +21,9 @@ public class UserService : AService
     
     
 
-    public UserMainDataDTO? GetMainData(int userID)
+    public async Task<UserMainDataDTO?> GetMainData(int userID)
     {
-        var user = Database.Users.Read().FirstOrDefault(usr => usr.ID == userID);
+        var user = await Database.Users.Read().FirstOrDefaultAsync(usr => usr.ID == userID);
         if (user == null)
         {
             //TODO log?
@@ -32,9 +33,9 @@ public class UserService : AService
 
     }
     
-    public UserMainDataDTO? GetMainData(string userEmail)
+    public async Task<UserMainDataDTO?> GetMainData(string userEmail)
     {
-        var user = Database.Users.Read().FirstOrDefault(usr => usr.Email.Equals(userEmail));
+        var user = await Database.Users.Read().FirstOrDefaultAsync(usr => usr.Email.Equals(userEmail));
         if (user == null)
         {
             //TODO log?

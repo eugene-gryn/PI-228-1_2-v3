@@ -21,7 +21,7 @@ public class UserController : ControllerBase
     public async Task<ActionResult<UserMainDataDTO>> GetMainData(int id)
     {
         _logger.LogInformation("[GetMainData] call");
-        var dto = _userS.GetMainData(id);
+        var dto = await _userS.GetMainData(id);
 
         if (dto == null)
         {
