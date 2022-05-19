@@ -1,4 +1,7 @@
 using BLL;
+using BLL.Services;
+using DAL.EF;
+using DAL.UOW;
 
 namespace WebAPI_PL
 {
@@ -6,12 +9,18 @@ namespace WebAPI_PL
     {
         public static void Main(string[] args)
         {
-            new TestWorker();
+            new TestWorker();//TODO for tests only
+
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
 
             builder.Services.AddControllers();
+
+            builder.Services.AddDbContext<MainContext>();
+            builder.Services.AddScoped<IUnitOfWork, EFUnitOfWork>();
+            builder.Services.AddScoped<UserService>();
+            
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();

@@ -20,12 +20,12 @@ namespace WebAPI_PL.Controllers
 
         [HttpGet]
         [Route("Product100")]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProducts100()
+        public async Task<ActionResult<IEnumerable<TestProduct>>> GetProducts100()
         {
             _logger.LogInformation("Product100");
             return Ok(Enumerable.Range(1, 4)
                 .Select(
-                    i => new Product(
+                    i => new TestProduct(
                         "Lison",
                         "Bidon",
                         100,
@@ -34,12 +34,12 @@ namespace WebAPI_PL.Controllers
         }
         [HttpGet]
         [Route("Product200")]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProducts200()
+        public async Task<ActionResult<IEnumerable<TestProduct>>> GetProducts200()
         {
             _logger.LogInformation("Product200");
             return Ok(Enumerable.Range(1, 4)
                 .Select(
-                    i => new Product(
+                    i => new TestProduct(
                         "Lison",
                         "Bidon",
                         200,
@@ -48,10 +48,10 @@ namespace WebAPI_PL.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Product>> Get(int id)
+        public async Task<ActionResult<TestProduct>> Get(int id)
         {
             _logger.LogInformation("Get ID");
-            return Ok(new Product(
+            return Ok(new TestProduct(
                 "Lison",
                 "Bidon",
                 200,
@@ -59,28 +59,28 @@ namespace WebAPI_PL.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Product>> Post(Product product)
+        public async Task<ActionResult<TestProduct>> Post(TestProduct testProduct)
         {
-            _logger.LogInformation("Set " + product.Name);
-            product.Name += "SET";
+            _logger.LogInformation("Set " + testProduct.Name);
+            testProduct.Name += "SET";
 
-            return Ok(product);
+            return Ok(testProduct);
         }
         [HttpPut]
-        public async Task<ActionResult<Product>> Put(Product product)
+        public async Task<ActionResult<TestProduct>> Put(TestProduct testProduct)
         {
-            _logger.LogInformation("Put " + product.Name);
-            product.Name += "PUT";
+            _logger.LogInformation("Put " + testProduct.Name);
+            testProduct.Name += "PUT";
 
-            return Ok(product);
+            return Ok(testProduct);
         }
         [HttpDelete]
-        public async Task<ActionResult<Product>> Delete(Product product)
+        public async Task<ActionResult<TestProduct>> Delete(TestProduct testProduct)
         {
-            _logger.LogInformation("Delete " + product.Name);
-            product.Name += "DELETE";
+            _logger.LogInformation("Delete " + testProduct.Name);
+            testProduct.Name += "DELETE";
 
-            return Ok(product);
+            return Ok(testProduct);
         }
     }
 }

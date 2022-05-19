@@ -1,8 +1,8 @@
 ﻿namespace WebAPI_PL.Controllers.Demo
 {
-    public class Product
+    public class TestProduct
     {
-        public Product(string name, string description, int price, int remainingStock)
+        public TestProduct(string name, string description, int price, int remainingStock)
         {
             Name = name;
             Description = description;

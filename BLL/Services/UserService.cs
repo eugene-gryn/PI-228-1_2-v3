@@ -20,16 +20,26 @@ public class UserService : AService
     
     
 
-    public UserMainDataDTO GetMainData(int userID)
+    public UserMainDataDTO? GetMainData(int userID)
     {
-        var user = Database.Users.Read().Single(usr => usr.ID == userID);
+        var user = Database.Users.Read().FirstOrDefault(usr => usr.ID == userID);
+        if (user == null)
+        {
+            //TODO log?
+            return null;
+        }
         return Mapper.Map<UserMainDataDTO>(user);
 
     }
     
-    public UserMainDataDTO GetMainData(string userEmail)
+    public UserMainDataDTO? GetMainData(string userEmail)
     {
-        var user = Database.Users.Read().Single(usr => usr.Email.Equals(userEmail));
+        var user = Database.Users.Read().FirstOrDefault(usr => usr.Email.Equals(userEmail));
+        if (user == null)
+        {
+            //TODO log?
+            return null;
+        }
         return Mapper.Map<UserMainDataDTO>(user);
     }
 
