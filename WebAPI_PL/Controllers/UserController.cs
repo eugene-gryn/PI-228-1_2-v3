@@ -21,8 +21,7 @@ public class UserController : ControllerBase
     }
 
 
-    [HttpPost, AllowAnonymous]
-    //[Route("api/users/register")]
+    [HttpPost("register"), AllowAnonymous]
     public async Task<ActionResult<UserMainDataDTO>> Register(UserRegisterDTO registerDto)
     {
         if (await _userS.GetMainData(registerDto.Email)!=null)
@@ -35,8 +34,7 @@ public class UserController : ControllerBase
     }
 
 
-    [HttpGet("{id:int}", Name = "GetUserByID")]
-    //[Route("findByID")]
+    [HttpGet("findByID/{id:int}")]
     public async Task<ActionResult<UserMainDataDTO>> GetMainData(int id)
     {
         _logger.LogInformation("[GetMainData] call");
@@ -49,8 +47,7 @@ public class UserController : ControllerBase
         return Ok(dto);
     }
 
-    [HttpGet("{email}", Name = "GetUserByEmail")]
-    //[Route("findByEmail")]
+    [HttpGet("findByEmail/{email}")]
     public async Task<ActionResult<UserMainDataDTO>> GetMainData(string email)
     {
         _logger.LogInformation("[GetMainData] call");
