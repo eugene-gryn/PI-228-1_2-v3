@@ -30,7 +30,7 @@ public class UserRepo : IRepository<User>
 
     public void Update(User item)
     {
-        _mainContext.Entry(item).State = EntityState.Modified; //TODO may be wrong
+        _mainContext.Entry(item).State = EntityState.Modified; //TODO may be wrong, check!
     }
 
     public void Delete(int id)

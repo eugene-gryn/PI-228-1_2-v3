@@ -29,7 +29,7 @@ public class OrderRepo : IRepository<Order>
 
     public void Update(Order item)
     {
-        _mainContext.Entry(item).State = EntityState.Modified;
+        _mainContext.Entry(item).State = EntityState.Modified; //TODO may be wrong, check!
     }
 
     public void Delete(int id)
