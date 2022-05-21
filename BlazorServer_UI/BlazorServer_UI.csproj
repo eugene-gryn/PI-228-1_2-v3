@@ -9,7 +9,6 @@
   <ItemGroup>
     <Folder Include="Data\" />
     <Folder Include="Pages\ProductsController\" />
-    <Folder Include="Pages\UsersController\" />
     <Folder Include="wwwroot\src\banner-pics\" />
   </ItemGroup>
 
