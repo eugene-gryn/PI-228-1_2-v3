@@ -1,4 +1,5 @@
-﻿@inherits LayoutComponentBase
+﻿@using System.Runtime.InteropServices
+@inherits LayoutComponentBase
 
 <PageTitle>BlazorServer_UI</PageTitle>
 
@@ -6,7 +7,8 @@
     <main>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
-                <a class="navbar-brand p-2" href="#">Kursach E-Commerce</a>
+                <NavLink class="navbar-brand p-2" href="/" Match="NavLinkMatch.All">Kursach E-Commerce</NavLink>
+
                 <button class="navbar-toggler shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -39,10 +41,15 @@
                         </form>
                     </a>
 
-
-                    <a class="nav-link m-2" href="#" tabindex="-1" aria-disabled="true">Кабінет</a>
-                    <a class="nav-link m-2" href="#" tabindex="-1" aria-disabled="true">Реєстрація</a>
-                    <a class="nav-link m-2" href="#" tabindex="-1" aria-disabled="true">Контакти</a>
+                    <NavLink href="/login" class="nav-link m-2" tabindex="-1" aria-disabled="true" Match="NavLinkMatch.All">
+                        Кабінет
+                    </NavLink>
+                    <NavLink href="/register" class="nav-link m-2" tabindex="-1" aria-disabled="true" Match="NavLinkMatch.All">
+                        Реєстрація
+                    </NavLink>
+                    <NavLink href="/contacts" class="nav-link m-2" tabindex="-1" aria-disabled="true" Match="NavLinkMatch.All">
+                        Контакти
+                    </NavLink>
 
                 </div>
             </div>
