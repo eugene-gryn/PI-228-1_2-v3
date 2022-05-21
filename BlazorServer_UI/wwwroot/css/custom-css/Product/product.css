@@ -1,0 +1,30 @@
+﻿:root {
+    --name-product: #000000;
+    --name-product-hover-bg: #2165D5;
+    --name-product-hover-color: #ffffff;
+}
+
+.product-link {
+    color: var(--name-product);
+    text-decoration: none;
+}
+
+.product-link:hover {
+    color: var(--name-product);
+    text-decoration: none;
+}
+
+
+.link-product:hover {
+    background-color: var(--name-product-hover-bg);
+    color: var(--name-product-hover-color);
+}
+
+.cart-button {
+    color: var(--name-product);
+}
+
+.cart-button:hover {
+    background-color: var(--name-product-hover-bg);
+    color: var(--name-product-hover-bg);
+}

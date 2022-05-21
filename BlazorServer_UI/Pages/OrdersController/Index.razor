@@ -1,5 +1,6 @@
 ﻿@page "/"
 @using BlazorServer_UI.StaticInformation
+@using BlazorServer_UI.Entities
 
 <PageTitle>@WebProjectInfo.ProjectName</PageTitle>
 
@@ -50,20 +51,29 @@
 
     <div>
         <div class="my-3">
-            <h4 class="my-2">Популярні товари саме для вас {User nick}</h4>
-            <div class="d-flex">
-                <div class="mx-2">
-                    <p>Товар 1</p>
-                </div>
-                <div class="mx-2">
-                    <p>Товар 2</p>
-                </div>
-                <div class="mx-2">
-                    <p>Товар 3</p>
+            <h4 class="my-2 text-center">Популярні товари саме для вас {User nick}</h4>
+
+            <div class="container">
+                <div class="row row-cols-auto">
+                    @for (var i = 0; i < 5; i++)
+                    {
+                        <div class="col">
+                            <ProductComponent ShopProduct="new Product(i, Name, ImageSrc, Desk, 400, 3)"/>
+                        </div>
+                    }
                 </div>
             </div>
+
+
             <button>Message</button>
         </div>
     </div>
 
 </div>
+
+@code
+{
+    readonly string Name = "Игровой стол Trust GXT 1190 Magnicus Gaming Desk with wireless charging (23542)";
+    readonly string Desk = "Desk";
+    readonly string ImageSrc = "https://modnamayka.com.ua/images/products/backs/t_m_1.png";
+}
