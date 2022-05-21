@@ -18,9 +18,7 @@ public class ProductRepo : IRepository<Product>
     public void Create(Product item)
     {
         item.ID = 0;
-        /* ????
-         * item.Price = 0f; 
-          item.RemainingStock = 0; */
+        _mainContext.Products.Add(item);
     }
 
     public IQueryable<Product> Read()
@@ -31,7 +29,7 @@ public class ProductRepo : IRepository<Product>
 
     public void Update(Product item)
     {
-        _mainContext.Entry(item).State = EntityState.Modified;
+        _mainContext.Entry(item).State = EntityState.Modified; //TODO may be wrong, check!
     }
 
     public void Delete(int id)
