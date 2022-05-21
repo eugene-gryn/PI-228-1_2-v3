@@ -1,10 +1,7 @@
 ﻿using BLL.DTOs;
+using DAL.Entities;
 using DAL.UOW;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data.Entity;
 
 namespace BLL.Services
 {
@@ -14,7 +11,24 @@ namespace BLL.Services
         {
 
         }
+        public async Task<ProductDTO?> Create(ProductDTO productDTO)
+        {
+            var product = Mapper.Map<Product>(productDTO);
 
-        
+            Database.Products.Create(product);
+            Database.Save();
+
+            return await GetMainData(product.ID);
+        }
+
+        public async Task<ProductDTO?> GetMainData(int productID)
+        {
+            var product = await Database.Products.Read().FirstOrDefaultAsync(prod => prod.ID == productID);
+            if (product == null)
+            {
+                return null;
+            }
+            return Mapper.Map<ProductDTO?>(product);
+        }
     }
 }
