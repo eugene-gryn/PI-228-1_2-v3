@@ -1,4 +1,4 @@
-﻿@inherits Components.ProductService
+﻿@using BlazorServer_UI.Entities
 
 <div style="max-width: @GetWidthParametr()" class="p-2 m-2 border border-2 rounded">
     <a class="product-link" href="#">
@@ -15,3 +15,10 @@
     </div>
 </div>
 
+@code
+{
+    [Parameter] public Product? ShopProduct { get; set; } = null;
+    [Parameter] public int MaxWidth { get; set; } = 300;
+
+    public string GetWidthParametr() => MaxWidth.ToString() + "px";
+}
