@@ -4,7 +4,9 @@
     --nav-hover: #000000;
 }
 
-
+.html {
+    font-family: FontAwesome;
+}
 
 
 .dropdown-item:focus, .dropdown-item:hover {
