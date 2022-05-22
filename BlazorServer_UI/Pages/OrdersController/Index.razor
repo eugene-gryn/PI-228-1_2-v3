@@ -4,7 +4,7 @@
 
 <PageTitle>@WebProjectInfo.ProjectName</PageTitle>
 
-<div>
+<div class="p-1 rounded-3 shadow sha shadow-lg" style="background-color: white">
 
     <div id="carouselBanner" class="carousel carousel-dark slide" data-bs-ride="carousel">
         <div class="carousel-indicators">
@@ -18,7 +18,7 @@
                 <img
                     src="src/banner-pics/pic-1.jpg"
                     alt="..."
-                    class="d-block mx-auto"
+                    class="d-block mx-auto img-fluid"
                     style="max-height: 300px; min-height: 250px; object-fit: scale-down"/>
             </div>
 
@@ -26,7 +26,7 @@
                 <img
                     src="src/banner-pics/pic-2.jpg"
                     alt="..."
-                    class="d-block mx-auto"
+                    class="d-block mx-auto img-fluid"
                     style="max-height: 300px; min-height: 250px; object-fit: scale-down"/>
             </div>
 
@@ -34,7 +34,7 @@
                 <img
                     src="src/banner-pics/pic-3.jpg"
                     alt="..."
-                    class="d-block mx-auto"
+                    class="d-block mx-auto img-fluid"
                     style="max-height: 300px; min-height: 250px; object-fit: scale-down"/>
             </div>
         </div>
@@ -49,23 +49,15 @@
     </div>
 
 
-    <div>
+    <div class="container">
         <div class="my-3">
             <h4 class="my-2 text-center">Популярні товари саме для вас {User nick}</h4>
 
-            <div class="container">
-                <div class="row row-cols-auto">
-                    @for (var i = 0; i < 5; i++)
-                    {
-                        <div class="col">
-                            <ProductComponent ShopProduct="new Product(i, Name, ImageSrc, Desk, 400, 3)"/>
-                        </div>
-                    }
-                </div>
+            <ProductsList MaxWidthElement="300" Products="GenerateList()"></ProductsList>
+
+            <div class="d-flex justify-content-center">
+                <button class="btn btn-info shadow-lg rounded">Ще товари..</button>
             </div>
-
-
-            <button>Message</button>
         </div>
     </div>
 
@@ -73,7 +65,23 @@
 
 @code
 {
-    readonly string Name = "Игровой стол Trust GXT 1190 Magnicus Gaming Desk with wireless charging (23542)";
-    readonly string Desk = "Desk";
-    readonly string ImageSrc = "https://modnamayka.com.ua/images/products/backs/t_m_1.png";
+    List<Product> GenerateList()
+    {
+        return new List<Product>()
+        {
+            new Product(1, TestData.Name, TestData.ImageSrc, TestData.Desk, 100, 4),
+            new Product(1, TestData.Name, TestData.ImageSrc, TestData.Desk, 100, 4),
+            new Product(1, TestData.Name, TestData.ImageSrc, TestData.Desk, 100, 4),
+            new Product(1, TestData.Name, TestData.ImageSrc, TestData.Desk, 100, 4),
+            new Product(1, TestData.Name, TestData.ImageSrc, TestData.Desk, 100, 4),
+            new Product(1, TestData.Name, TestData.ImageSrc, TestData.Desk, 100, 4)
+        };
+    }
+
+    static class TestData
+    {
+        public static string Name = "Игровой стол Trust GXT 1190 Magnicus Gaming Desk with wireless charging (23542)";
+        public static string Desk = "Desk";
+        public static string ImageSrc = "https://modnamayka.com.ua/images/products/backs/t_m_1.png";
+    }
 }

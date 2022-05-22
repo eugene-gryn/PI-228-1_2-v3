@@ -1,0 +1,13 @@
+﻿@using BlazorServer_UI.Entities
+
+<div class="d-flex flex-wrap justify-content-center">
+    @for (var i = 0; i < Products?.Count; i++)
+    {
+        <ProductComponent MaxWidth="MaxWidthElement" ShopProduct="Products[i]"/>
+    }
+</div>
+
+@code {
+    [Parameter] public List<Product>? Products { get; set; }
+    [Parameter] public int MaxWidthElement { get; set; }
+}
