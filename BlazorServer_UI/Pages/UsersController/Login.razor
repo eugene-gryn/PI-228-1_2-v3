@@ -7,10 +7,9 @@
 <div class="box-form">
     <div class="left">
         <div class="overlay">
-            <h1>Hello World.</h1>
+            <h1>Доступ до кабінету!</h1>
             <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Curabitur et est sed felis aliquet sollicitudin
+                Щоб отримати доступ до замовлень, особистої інформації можете зареєструватися ибо ввійти у вже існуючий профіль.
             </p>
 
         </div>
@@ -18,32 +17,25 @@
 
 
     <div class="right">
-        <h5>Login</h5>
-        <p>Don't have an account? <a href="#">Creat Your Account</a> it takes less than a minute</p>
+        <h4 class="mb-4">Вхід в кабінет</h4>
+        <p class="my-1">Не маєте акунту? <NavLink href="/register" Match="NavLinkMatch.All">Зарєструвати новий</NavLink></p>
         <div class="inputs">
-            <input type="text" placeholder="user name">
+            <input class="input-group-text" type="text" placeholder="им'я користувача...">
             <br>
-            <input type="password" placeholder="password">
+            <input class="input-group-text" type="password" placeholder="пароль...">
         </div>
 
-        <br><br>
-
-        <div class="remember-me--forget-password">
-            <!-- Angular -->
-            <label>
-                <input type="checkbox" name="item" checked/>
-                <span class="text-checkbox">Remember me</span>
-            </label>
-            <p>forget password?</p>
+        <div class="mt-4 d-flex justify-content-between">
+            <div class="my-auto form-check">
+                <input style="width: 20px" class="my-auto form-check-input" type="checkbox" value="" id="check-remeberme-login" checked>
+                <label class="mx-2 my-auto form-check-label" for="check-remeberme-login">
+                    Запам'ятати мене
+                </label>
+            </div>
+            <button class="rounded">Увійти</button>
         </div>
 
         <br>
-        <button class="rounded">Login</button>
     </div>
 
 </div>
-<!-- partial -->
-
-@code {
-
-}
