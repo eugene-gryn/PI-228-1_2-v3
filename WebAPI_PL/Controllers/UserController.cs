@@ -21,19 +21,6 @@ public class UserController : ControllerBase
     }
 
 
-    /*[HttpPost("register"), AllowAnonymous]
-    public async Task<ActionResult<UserMainDataDTO>> Register(UserRegisterDTO registerDto)
-    {
-        if (await _userS.GetMainData(registerDto.Email)!=null)
-        {
-            return Problem("User with such email already exists!");
-        }
-        var updatedDTO = await _userS.Create(registerDto);
-        
-        return Ok(updatedDTO);
-    }*/
-
-
     [HttpGet("findByID/{id:int}")]
     public async Task<ActionResult<UserMainDataDTO>> GetMainData(int id)
     {
@@ -51,7 +38,8 @@ public class UserController : ControllerBase
         }
         return Ok(dto);
     }
-
+    
+    
     [HttpGet("findByEmail/{email}")]
     public async Task<ActionResult<UserMainDataDTO>> GetMainData(string email)
     {

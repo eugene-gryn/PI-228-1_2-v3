@@ -13,7 +13,6 @@ namespace WebAPI_PL.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        //public static User user = new User();
         private readonly IConfiguration _configuration;
         private readonly UserService _userService;
 
@@ -23,12 +22,7 @@ namespace WebAPI_PL.Controllers
             _userService = userService;
         }
 
-        /*[HttpGet, Authorize]
-        public ActionResult<string> GetMe()
-        {
-            var userName = _userService.GetMyName();
-            return Ok(userName);
-        }*/
+        #region API methods
 
         [HttpPost("register"), AllowAnonymous]
         public async Task<ActionResult<UserMainDataDTO>> Register(UserRegisterDTO registerDto)
@@ -54,6 +48,7 @@ namespace WebAPI_PL.Controllers
             return Ok(updatedDTO);
         }
 
+        
         [HttpPost("login")]
         public async Task<ActionResult<string>> Login(UserLoginDTO request)
         {
@@ -76,8 +71,7 @@ namespace WebAPI_PL.Controllers
 
             return Ok(token);
         }
-        
-        
+
 
         [HttpPost("refresh-token")]
         public async Task<ActionResult<string>> RefreshToken()
@@ -108,6 +102,10 @@ namespace WebAPI_PL.Controllers
             return Ok(token);
         }
 
+        #endregion
+        
+
+        #region Assist methods
 
         private void SetRefreshToken(UserMainDataDTO userMainDataDto)
         {
@@ -127,6 +125,7 @@ namespace WebAPI_PL.Controllers
             userMainDataDto.TokenExpires = expires;
         }
 
+        
         private string CreateToken(UserMainDataDTO userMainDTO)
         {
             var claims = new List<Claim>
@@ -150,6 +149,7 @@ namespace WebAPI_PL.Controllers
             return jwt;
         }
 
+        
         private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
             using (var hmac = new HMACSHA512())
@@ -159,6 +159,7 @@ namespace WebAPI_PL.Controllers
             }
         }
         
+        
         private bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
         {
             using (var hmac = new HMACSHA512(passwordSalt))
@@ -167,5 +168,9 @@ namespace WebAPI_PL.Controllers
                 return computedHash.SequenceEqual(passwordHash);
             }
         }
+
+        #endregion
+
+        
     }
 }
