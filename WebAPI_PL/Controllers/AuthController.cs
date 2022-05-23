@@ -83,25 +83,25 @@ namespace WebAPI_PL.Controllers
         public async Task<ActionResult<string>> RefreshToken()
         {
             var refreshToken = Request.Cookies["refreshToken"];
+            
+            
+            var userID = Utils.GetUserIDFromJWT(Request);
+            if (userID == null) return Unauthorized("Could not get your ID :(");
 
-            
-            var jwtString = Request.Headers.Authorization[0];
-            var userID = 12345;
-            
-            
-            var u = await _userService.GetMainData(userID); //TODO get somehow userID
+            var u = await _userService.GetMainData((int) userID);
+            if (u == null) return NotFound("Can not refresh the token - user with needed ID not found!");
 
             if (!u.RefreshToken.Equals(refreshToken))
             {
                 return Unauthorized("Invalid Refresh Token.");
             }
-            else if(u.TokenExpires < DateTime.Now)
+            if(u.TokenExpires < DateTime.Now)
             {
                 return Unauthorized("Token expired.");
             }
 
             string token = CreateToken(u);
-            SetRefreshToken(u);//TODO AND SAVE!!!
+            SetRefreshToken(u);
             await _userService.Update(u);
             
 

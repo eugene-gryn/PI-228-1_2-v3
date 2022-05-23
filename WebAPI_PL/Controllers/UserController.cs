@@ -37,7 +37,7 @@ public class UserController : ControllerBase
     [HttpGet("findByID/{id:int}")]
     public async Task<ActionResult<UserMainDataDTO>> GetMainData(int id)
     {
-        if (Utils.GetIDFromJWT(Request) != id)
+        if (Utils.GetUserIDFromJWT(Request) != id)
         {
             return BadRequest("User can get only his own data.");
         }
