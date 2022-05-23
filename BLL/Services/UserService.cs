@@ -33,8 +33,7 @@ public class UserService : AService
 
     public async Task<UserMainDataDTO?> GetMainData(int userID)
     {
-        var user = await Database.Users.Read().FirstOrDefaultAsync(usr => usr.ID == userID);
-        Database.Users.Read().Entry
+        var user = await Database.Users.Read().AsNoTracking().FirstOrDefaultAsync(usr => usr.ID == userID);
         if (user == null)
         {
             //TODO log?
@@ -46,7 +45,7 @@ public class UserService : AService
     
     public async Task<UserMainDataDTO?> GetMainData(string userEmail)
     {
-        var user = await Database.Users.Read().FirstOrDefaultAsync(usr => usr.Email.Equals(userEmail));
+        var user = await Database.Users.Read().AsNoTracking().FirstOrDefaultAsync(usr => usr.Email.Equals(userEmail));
         if (user == null)
         {
             //TODO log?
