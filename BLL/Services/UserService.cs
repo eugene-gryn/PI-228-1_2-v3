@@ -19,9 +19,9 @@ public class UserService : AService
     //delete
 
 
-    public async Task<UserMainDataDTO?> Create(UserRegisterDTO registerDto)
+    public async Task<UserMainDataDTO?> Create(UserMainDataDTO mainDto)
     {
-        var user = Mapper.Map<User>(registerDto);
+        var user = Mapper.Map<User>(mainDto);
 
         Database.Users.Create(user);
         Database.Save();
@@ -34,6 +34,7 @@ public class UserService : AService
     public async Task<UserMainDataDTO?> GetMainData(int userID)
     {
         var user = await Database.Users.Read().FirstOrDefaultAsync(usr => usr.ID == userID);
+        Database.Users.Read().Entry
         if (user == null)
         {
             //TODO log?
@@ -52,6 +53,15 @@ public class UserService : AService
             return null;
         }
         return Mapper.Map<UserMainDataDTO>(user);
+    }
+    
+    
+    public async Task Update(UserMainDataDTO mainDataDto)
+    {
+        //TODO check if works correct
+        var user = Mapper.Map<User>(mainDataDto);
+        Database.Users.Update(user);
+        Database.Save();
     }
 
 }

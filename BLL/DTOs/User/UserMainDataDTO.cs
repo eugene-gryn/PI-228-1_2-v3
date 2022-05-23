@@ -11,8 +11,15 @@ public class UserMainDataDTO
     public string Email { get; set; } = string.Empty;
     [Phone]
     public string Phone { get; set; } = string.Empty;
+    
+    
     [Required]
-    public string Password { get; set; }
+    public byte[] PasswordHash { get; set; }
+    [Required]
+    public byte[] PasswordSalt { get; set; }
+    public string RefreshToken { get; set; } = string.Empty;
+    public DateTime TokenCreated { get; set; }
+    public DateTime TokenExpires { get; set; }
 
     public bool IsAdmin;
     public bool IsModer;

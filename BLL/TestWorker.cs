@@ -25,7 +25,8 @@ public class TestWorker
             {
                 Name = "TestUser",
                 Email = "test@email.com",
-                Password = "12345",
+                PasswordHash = new byte[]{0x00, 0x21, 0x60, 0x1F},
+                PasswordSalt = new byte[]{0x00, 0x21, 0x60, 0x1F},
                 Cart = new List<ProductAmount>() {new ProductAmount() {Product = p1, Amount = 22}, new ProductAmount(){Product = p2, Amount = 55}}
             };
             context.Users.Add(u1);

@@ -1,7 +1,6 @@
 using DAL.EF;
 using DAL.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace DAL.Repos;
 
@@ -31,6 +30,7 @@ public class UserRepo : IRepository<User>
     public void Update(User item)
     {
         _mainContext.Entry(item).State = EntityState.Modified; //TODO may be wrong, check!
+
     }
 
     public void Delete(int id)

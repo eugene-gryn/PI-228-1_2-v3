@@ -12,7 +12,15 @@ public class User
     public string Email { get; set; } = string.Empty;
     public string Phone { get; set; } = string.Empty;
     [Required]
-    public string Password { get; set; }
+    public byte[] PasswordHash { get; set; }
+    [Required]
+    public byte[] PasswordSalt { get; set; }
+    
+    
+    public string RefreshToken { get; set; } = string.Empty;
+    public DateTime TokenCreated { get; set; }
+    public DateTime TokenExpires { get; set; }
+    
 
     public ICollection<Order> Orders { get; set; }
     public ICollection<ProductAmount> Cart { get; set; }
