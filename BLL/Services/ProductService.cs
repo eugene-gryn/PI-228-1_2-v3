@@ -27,4 +27,11 @@ public class ProductService : AService
         if (product == null) return null;
         return Mapper.Map<ProductDTO?>(product);
     }
+
+
+    public async Task<bool> DeleteProduct(int productID)
+    {
+        return await Database.Products.Delete(productID);
+
+    }
 }
