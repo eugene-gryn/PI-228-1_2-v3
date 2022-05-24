@@ -23,7 +23,7 @@ public class UserService : AService
     {
         var user = Mapper.Map<User>(mainDto);
 
-        Database.Users.Create(user);
+        await Database.Users.Create(user);
         Database.Save();
 
         return await GetMainData(user.Email);
@@ -59,7 +59,7 @@ public class UserService : AService
     {
         //TODO check if works correct
         var user = Mapper.Map<User>(mainDataDto);
-        Database.Users.Update(user);
+        await Database.Users.Update(user);
         Database.Save();
     }
 
