@@ -12,16 +12,14 @@ public abstract class AService : IDisposable
     protected AService(IUnitOfWork uow)
     {
         Database = uow;
-        
+
         var configuration = new MapperConfiguration(cfg => { cfg.AddProfile<MainProfile>(); });
         Mapper = new AutoMapper.Mapper(configuration);
     }
-    
-    
+
 
     public void Dispose()
     {
         Database.Dispose();
     }
-
 }
