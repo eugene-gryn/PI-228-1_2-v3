@@ -7,11 +7,10 @@ namespace BLL.Services;
 
 public class OrderService : AService
 {
-    public OrderService(IUnitOfWork uow) : base(uow)
-    {
-    }
+    public OrderService(IUnitOfWork uow) : base(uow) { }
 
-    public async Task<OrderDTO> Create(OrderDTO orderDto)
+    
+    public async Task<OrderDTO?> Create(OrderDTO orderDto)
     {
         var order = Mapper.Map<Order>(orderDto);
 
@@ -21,6 +20,7 @@ public class OrderService : AService
         return await GetMainData(order.ID);
     }
 
+    
     public async Task<OrderDTO?> GetMainData(int OrderID)
     {
         var order = await Database.Orders.Read().FirstOrDefaultAsync(ord => ord.ID == OrderID);
