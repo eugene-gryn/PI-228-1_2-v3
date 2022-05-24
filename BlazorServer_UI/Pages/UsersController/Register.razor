@@ -1,7 +1,90 @@
 ﻿@page "/register"
 
-<h3>Register</h3>
+<link rel="stylesheet" href="css/custom-css/Register/style.css"/>
 
-@code {
+<section class="">
+    <div class="container">
+        <div class="row d-flex justify-content-center align-items-center">
+            <div class="col-lg-12 col-xl-11">
+                <div class="card shadow shadow-lg mb-3" style="border-radius: 15px;">
+                    <div class="card-body">
+                        <div class="row justify-content-center">
+                            <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
 
-}
+                                <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">
+                                    Реєстрація
+                                </p>
+
+                                <form class="mx-1 mx-md-4">
+
+                                    <div class="d-flex flex-row align-items-center mb-3">
+                                        <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                                        <div class="form-outline flex-fill mb-0">
+                                            <label class="form-label my-1" for="Name">
+                                                Ваше ім'я
+                                            </label>
+                                            <input type="text" id="Name" 
+                                                   placeholder="Ваше ім'я"
+                                                   class="form-control"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex flex-row align-items-center mb-3">
+                                        <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                                        <div class="form-outline flex-fill mb-0">
+                                            <label class="form-label my-1" for="Name">
+                                                Ваш Email
+                                            </label>
+                                            <input type="email" id="Name"
+                                                   placeholder="ВашаПочта@укр.нет"
+                                                   class="form-control"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex flex-row align-items-center mb-3">
+                                        <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                                        <div class="form-outline flex-fill mb-0">
+                                            <label class="form-label my-1" for="Name">
+                                                Ваш телефон
+                                            </label>
+                                            <input type="number" id="Name"
+                                                   placeholder="+380123456789"
+                                                   class="form-control"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex flex-row align-items-center mb-3">
+                                        <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                                        <div class="form-outline flex-fill mb-0">
+                                            <label class="form-label my-1" for="Name">
+                                                Ваш пароль
+                                            </label>
+                                            <input type="password" id="Name"
+                                                   placeholder="Пароль..."
+                                                   class="form-control"/>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                                        <button type="button" class="btn btn-outline-primary btn-lg">
+                                            Зареєструватися
+                                        </button>
+                                    </div>
+
+                                </form>
+
+                            </div>
+                            <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
+
+                                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp"
+                                     class="img-fluid" alt="Sample image">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
