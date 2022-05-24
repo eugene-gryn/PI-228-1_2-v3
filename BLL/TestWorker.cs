@@ -40,7 +40,7 @@ public class TestWorker
         }
 
 
-        using (var context = new MainContext())
+        /*using (var context = new MainContext())
         {
             var user = context.Users.Include(u => u.Cart).ThenInclude(pa => pa.Product).First();
             Console.WriteLine($"Name: {user.Name}");
@@ -52,6 +52,6 @@ public class TestWorker
 
 
             foreach (var pa in cart) Console.WriteLine($"    {pa.Product.Name}: {pa.Amount} шт.");
-        }
+        }*/
     }
 }

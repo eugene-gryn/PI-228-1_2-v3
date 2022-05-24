@@ -13,13 +13,14 @@ public class UserRepo : IRepository<User>
         _mainContext = mainContext;
     }
 
-    public void Create(User item)
+    public async Task<User> Create(User item)
     {
         item.ID = 0;
         item.IsAdmin = false;
         item.IsModer = false;
 
-        _mainContext.Add(item);
+        await _mainContext.AddAsync(item);
+        return item;
     }
 
     public IQueryable<User> Read()
@@ -27,16 +28,19 @@ public class UserRepo : IRepository<User>
         return _mainContext.Users.AsQueryable();
     }
 
-    public void Update(User item)
+    public async Task<bool> Update(User item)
     {
         _mainContext.Entry(item).State = EntityState.Modified; //TODO may be wrong, check!
+        return true; //TODO add check?
 
     }
 
-    public void Delete(int id)
+    public async Task<bool> Delete(int id)
     {
-        var p = _mainContext.Users.Find(id);
-        if (p != null)
-            _mainContext.Users.Remove(p);
+        var p = await _mainContext.Users.FindAsync(id);
+        if (p == null) return false;
+        
+        _mainContext.Users.Remove(p);
+        return true;
     }
 }

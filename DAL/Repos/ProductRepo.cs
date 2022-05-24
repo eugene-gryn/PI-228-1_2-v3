@@ -15,10 +15,13 @@ public class ProductRepo : IRepository<Product>
     }
 
 
-    public void Create(Product item)
+    public async Task<Product> Create(Product item)
     {
         item.ID = 0;
-        _mainContext.Products.Add(item);
+        await _mainContext.Products.AddAsync(item);
+
+        return item;
+
     }
 
     public IQueryable<Product> Read()
@@ -27,15 +30,18 @@ public class ProductRepo : IRepository<Product>
     }
     
 
-    public void Update(Product item)
+    public async Task<bool> Update(Product item)
     {
         _mainContext.Entry(item).State = EntityState.Modified; //TODO may be wrong, check!
+        return true;
     }
 
-    public void Delete(int id)
+    public async Task<bool> Delete(int id)
     {
-        var p = _mainContext.Products.Find(id);
-        if(p != null)
-            _mainContext.Products.Remove(p);
+        var p = await _mainContext.Products.FindAsync(id);
+        if (p == null) return false;
+        
+        _mainContext.Products.Remove(p);
+        return true;
     }
 }

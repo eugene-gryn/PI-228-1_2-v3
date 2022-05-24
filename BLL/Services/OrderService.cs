@@ -45,4 +45,18 @@ public class OrderService : AService
 
 
     }
+    
+    
+    public async Task<bool> DeleteOrder(int orderID)
+    {
+        var order = await Database.Orders.Read()
+            .Include(o => o.ProductAmounts)
+            .FirstOrDefaultAsync(o => o.ID == orderID);
+
+        if (order == null) return false;
+        
+        return await Database.Orders.Delete(orderID);
+    }
+
+    //delete cart? and its PAs
 }

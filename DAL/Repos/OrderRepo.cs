@@ -13,12 +13,14 @@ public class OrderRepo : IRepository<Order>
         _mainContext = mainContext;
     }
 
-    public void Create(Order item)
+    public async Task<Order> Create(Order item)
     {
         item.ID = 0;
-        item.Processed = false; 
+        item.Processed = false;
 
-        _mainContext.Add(item);
+        await _mainContext.AddAsync(item);
+
+        return item;
     }
 
     public IQueryable<Order> Read()
@@ -27,15 +29,19 @@ public class OrderRepo : IRepository<Order>
     }
     
 
-    public void Update(Order item)
+    public async Task<bool> Update(Order item)
     {
         _mainContext.Entry(item).State = EntityState.Modified; //TODO may be wrong, check!
+        return true;//TODO add checks?
     }
 
-    public void Delete(int id)
+    public async Task<bool> Delete(int id)
     {
-        var o = _mainContext.Orders.Find(id);
-        if(o != null)
-            _mainContext.Orders.Remove(o);
+        var o = await _mainContext.Orders.Include(order =>order.ProductAmounts).FirstOrDefaultAsync();
+        if (o == null) return false;
+        
+        _mainContext.Orders.Remove(o);
+
+        return true;
     }
 }
