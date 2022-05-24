@@ -14,7 +14,7 @@ public class ProductService : AService
     {
         var product = Mapper.Map<Product>(productDTO);
 
-        Database.Products.Create(product);
+        await Database.Products.Create(product);
         Database.Save();
 
         return await GetMainData(product.ID);

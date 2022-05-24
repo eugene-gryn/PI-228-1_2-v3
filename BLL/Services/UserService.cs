@@ -34,11 +34,8 @@ public class UserService : AService
     public async Task<UserMainDataDTO?> GetMainData(int userID)
     {
         var user = await Database.Users.Read().AsNoTracking().FirstOrDefaultAsync(usr => usr.ID == userID);
-        if (user == null)
-        {
-            //TODO log?
-            return null;
-        }
+        
+        if (user == null)return null;
         return Mapper.Map<UserMainDataDTO>(user);
 
     }
@@ -46,17 +43,15 @@ public class UserService : AService
     public async Task<UserMainDataDTO?> GetMainData(string userEmail)
     {
         var user = await Database.Users.Read().AsNoTracking().FirstOrDefaultAsync(usr => usr.Email.Equals(userEmail));
-        if (user == null)
-        {
-            //TODO log?
-            return null;
-        }
+        
+        if (user == null) return null;
         return Mapper.Map<UserMainDataDTO>(user);
     }
     
     
     public async Task Update(UserMainDataDTO mainDataDto)
     {
+        //TODO validate DTO?
         //TODO check if works correct
         var user = Mapper.Map<User>(mainDataDto);
         await Database.Users.Update(user);

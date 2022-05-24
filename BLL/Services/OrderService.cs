@@ -14,7 +14,7 @@ public class OrderService : AService
     {
         var order = Mapper.Map<Order>(orderDto);
 
-        Database.Orders.Create(order);
+        await Database.Orders.Create(order);
         Database.Save();
 
         return await GetMainData(order.ID);
@@ -49,13 +49,8 @@ public class OrderService : AService
     
     public async Task<bool> DeleteOrder(int orderID)
     {
-        var order = await Database.Orders.Read()
-            .Include(o => o.ProductAmounts)
-            .FirstOrDefaultAsync(o => o.ID == orderID);
-
-        if (order == null) return false;
-        
         return await Database.Orders.Delete(orderID);
+        
     }
 
     //delete cart? and its PAs
