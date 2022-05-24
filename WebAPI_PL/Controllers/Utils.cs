@@ -20,7 +20,7 @@ public static class Utils
     }
 
 
-    public static int? GetIDFromJWT(HttpRequest httpRequest)
+    public static int? GetUserIDFromJWT(HttpRequest httpRequest)
     {
         var jwtTokenString = GetJWTTokenFromRequest(httpRequest);
         var token = new JwtSecurityToken(jwtTokenString);
