@@ -18,8 +18,6 @@ namespace WebAPI_PL
 
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-
 
             builder.Services.AddControllers();
             
@@ -41,6 +39,7 @@ namespace WebAPI_PL
                     options.TokenValidationParameters = new TokenValidationParameters()
                     {
                         ValidateIssuerSigningKey = true,
+                        ValidateLifetime = true,
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("AppSettings:Token").Value)),
                         ValidateIssuer = false,
                         ValidateAudience = false

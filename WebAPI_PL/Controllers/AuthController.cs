@@ -65,7 +65,7 @@ namespace WebAPI_PL.Controllers
 
             string token = CreateToken(u);
             
-            SetRefreshToken(u);//TODO AND SAVE!!!
+            SetRefreshToken(u);
             await _userService.Update(u);
             
 
@@ -79,7 +79,7 @@ namespace WebAPI_PL.Controllers
             var refreshToken = Request.Cookies["refreshToken"];
             
             
-            var userID = Utils.GetUserIDFromJWT(Request);
+            var userID = Utils.GetUserIDFromJWT(User);
             if (userID == null) return Unauthorized("Could not get your ID :(");
 
             var u = await _userService.GetMainData((int) userID);
