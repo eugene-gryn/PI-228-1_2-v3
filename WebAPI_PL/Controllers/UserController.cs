@@ -13,7 +13,7 @@ public class UserController : ControllerBase
     private readonly ILogger<UserController> _logger;
 
     private readonly UserService _userS;
-        
+
     public UserController(ILogger<UserController> logger, UserService userService)
     {
         _logger = logger;
@@ -37,18 +37,12 @@ public class UserController : ControllerBase
     [HttpGet("findByID/{id:int}")]
     public async Task<ActionResult<UserMainDataDTO>> GetMainData(int id)
     {
-        if (Utils.GetIDFromJWT(Request) != id)
-        {
-            return BadRequest("User can get only his own data.");
-        }
-        
+        if (Utils.GetIDFromJWT(Request) != id) return BadRequest("User can get only his own data.");
+
         _logger.LogInformation("[GetMainData] call");
         var dto = await _userS.GetMainData(id);
 
-        if (dto == null)
-        {
-            return BadRequest("Bad user id.");
-        }
+        if (dto == null) return BadRequest("Bad user id.");
         return Ok(dto);
     }
 
@@ -58,12 +52,8 @@ public class UserController : ControllerBase
         _logger.LogInformation("[GetMainData] call");
         var dto = await _userS.GetMainData(email);
 
-        if (dto == null)
-        {
-            return BadRequest("Bad user email.");
-        }
+        if (dto == null) return BadRequest("Bad user email.");
 
         return Ok(dto);
     }
-
 }
