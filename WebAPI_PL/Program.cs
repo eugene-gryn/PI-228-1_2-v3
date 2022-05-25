@@ -18,8 +18,6 @@ namespace WebAPI_PL
 
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-
 
             builder.Services.AddControllers();
             
@@ -41,6 +39,7 @@ namespace WebAPI_PL
                     options.TokenValidationParameters = new TokenValidationParameters()
                     {
                         ValidateIssuerSigningKey = true,
+                        ValidateLifetime = true,
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("AppSettings:Token").Value)),
                         ValidateIssuer = false,
                         ValidateAudience = false
@@ -49,6 +48,8 @@ namespace WebAPI_PL
             builder.Services.AddDbContext<MainContext>();
             builder.Services.AddScoped<IUnitOfWork, EFUnitOfWork>();
             builder.Services.AddScoped<UserService>();
+            builder.Services.AddScoped<ProductService>();
+            builder.Services.AddScoped<OrderService>();
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();

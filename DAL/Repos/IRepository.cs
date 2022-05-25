@@ -4,8 +4,8 @@ namespace DAL.Repos;
 
 public interface IRepository<T> where T:class
 {
-    void Create(T item);
+    Task<T> Create(T item);
     IQueryable<T> Read();
-    void Update(T item);
-    void Delete(int id);
+    Task<bool> Update(T item);
+    Task<bool> Delete(int id);
 }
