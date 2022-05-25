@@ -38,7 +38,7 @@ public class OrdersController : ControllerBase
 
 
 
-    [HttpGet("orderData/{id:int}")]
+    [HttpGet("orderData/{orderId:int}")]
     public async Task<ActionResult<OrderDTO>> GetOrderData(int orderId)
     {
         var orderData = await _orderService.GetMainData(orderId);
@@ -56,8 +56,8 @@ public class OrdersController : ControllerBase
     }
     
     
-    [HttpDelete("deleteOrder/{id:int}")]
-    public async Task<ActionResult<OrderDTO>> DeleteOrder(int orderId) 
+    [HttpDelete("deleteOrder/{orderId:int}")]
+    public async Task<ActionResult<bool>> DeleteOrder(int orderId) 
     {
         var orderData = await _orderService.GetMainData(orderId);
         if (orderData == null)
@@ -72,9 +72,26 @@ public class OrdersController : ControllerBase
         
         
 
-        //_orderService.Delete();
+        var success = await _orderService.DeleteOrder(orderId);
 
-        return Ok(orderData);
+        return Ok(success);
     }
-    
+
+
+    [HttpPost("markProcessed/{orderId:int}")]
+    public async Task<ActionResult<bool>> MarkOrderAsProcessed(int orderId)
+    {
+        var userID = Utils.GetUserIDFromJWT(User);
+        if (userID == null) return BadRequest("User ID error.");
+
+        var user = await _userService.GetMainData((int)userID);
+        if (user == null || !user.IsModer && !user.IsAdmin)
+        {
+            return BadRequest("Forbidden!");
+        }
+
+        var result = await _orderService.MarkOrderAsProcessed(orderId);
+        return Ok(result);
+    }
+
 }
