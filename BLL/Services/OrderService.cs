@@ -32,6 +32,7 @@ public class OrderService : AService
     public async Task<Dictionary<ProductDTO, int>?> GetOrderProducts(int orderID)
     {
         var order = await Database.Orders.Read()
+            .AsNoTracking()
             .Include(o => o.ProductAmounts)
             .FirstOrDefaultAsync(o => o.ID == orderID);
 
@@ -42,16 +43,85 @@ public class OrderService : AService
             elementSelector: prodAm => prodAm.Amount);
 
         return dict;
+    }
+    
+    
+    public async Task<Dictionary<ProductDTO, int>?> GetCartProducts(int cartUserID)
+    {
+        var user = await Database.Users.Read()
+            .AsNoTracking()
+            .Include(u => u.Cart)
+            .FirstOrDefaultAsync(u => u.ID == cartUserID);
 
+        if (user == null) return null;
 
+        var dict = user.Cart.ToDictionary(
+            keySelector: prodAm => Mapper.Map<ProductDTO>(prodAm.Product),
+            elementSelector: prodAm => prodAm.Amount);
+
+        return dict;
     }
     
     
     public async Task<bool> DeleteOrder(int orderID)
     {
-        return await Database.Orders.Delete(orderID);
+        var success = await Database.Orders.Delete(orderID);//TODO check ProdAmounts also are deleted
+        if (success) Database.Save();
+
+        return success;
+    }
+
+    public async Task<bool> MoveProductsFromCartToOrder(int cartUserID, int orderID)
+    {
+        var cartDict = await GetCartProducts(cartUserID);
+        if (cartDict == null || cartDict.Count == 0)
+            return false;
+
+        var order = await Database.Orders.Read()
+            .Include(o => o.ProductAmounts)
+            .FirstOrDefaultAsync(u => u.ID == orderID);
+        if (order == null) return
+            false;
+
+        var user = await Database.Users.Read()
+            .Include(u => u.Cart)
+            .FirstOrDefaultAsync(u => u.ID == cartUserID);
+
+
+        var userCart = user.Cart;
+
+        foreach (var productAmount in userCart)
+        {
+            user.Cart.Remove(productAmount);
+            order.ProductAmounts.Add(productAmount);
+        }
         
+        Database.Save();
+        return true;
+    }
+
+    //может и не нужен
+    public async Task<bool> AssignProductsToOrder(int orderID, Dictionary<ProductDTO, int> dict)
+    {
+        throw new NotImplementedException();
     }
 
     //delete cart? and its PAs
+
+    public async Task<bool> DeleteProductFromCart(int cartUserID, int productID)
+    {
+        var user = await Database.Users.Read()
+            .Include(u => u.Cart)
+            .FirstOrDefaultAsync(u => u.ID == cartUserID);
+
+        if (user == null) return false;
+
+        var product = user.Cart.FirstOrDefault(pa => pa.Product.ID == productID);
+        if (product == null) return false;
+
+        user.Cart.Remove(product);
+        Database.Save();
+        return true;
+    }
+
 }
