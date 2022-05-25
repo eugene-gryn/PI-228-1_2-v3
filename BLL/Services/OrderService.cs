@@ -106,9 +106,23 @@ public class OrderService : AService
         throw new NotImplementedException();
     }
 
-    //delete cart? and its PAs
 
-    
+
+    public async Task<bool> MarkOrderAsProcessed(int orderID)
+    {
+        var order = await Database.Orders.Read()
+            .FirstOrDefaultAsync(u => u.ID == orderID);
+
+        if (order == null) return false;
+
+        order.Processed = true;
+        Database.Save();
+        return true;
+
+    }
+
+
+
     public async Task<bool> AddProductToCart(int cartUserID, int productID, int amount)
     {
         var user = await Database.Users.Read()
