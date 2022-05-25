@@ -108,6 +108,27 @@ public class OrderService : AService
 
     //delete cart? and its PAs
 
+    
+    public async Task<bool> AddProductToCart(int cartUserID, int productID, int amount)
+    {
+        var user = await Database.Users.Read()
+            .Include(u => u.Cart)
+            .FirstOrDefaultAsync(u => u.ID == cartUserID);
+
+        if (user == null) return false;
+
+        var product = await Database.Products.Read()
+            .AsNoTracking()
+            .FirstOrDefaultAsync(p => p.ID == productID);
+
+        if (product == null) return false;
+
+        user.Cart.Add(new ProductAmount(){Product = product, Amount = amount});
+        Database.Save();
+        return true;
+    }
+    
+    
     public async Task<bool> DeleteProductFromCart(int cartUserID, int productID)
     {
         var user = await Database.Users.Read()
