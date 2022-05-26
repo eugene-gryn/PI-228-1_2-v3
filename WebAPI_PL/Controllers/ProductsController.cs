@@ -41,7 +41,7 @@ public class ProductsController : ControllerBase
         
         return Ok(productData);
     }
-
+    
 
     [HttpDelete("deleteProduct/{productID:int}")]
     public async Task<ActionResult<ProductDTO>> DeleteProduct(int productID)
@@ -65,4 +65,9 @@ public class ProductsController : ControllerBase
 
         return Forbid("You are not moderator.");
     }
+    [HttpGet("productData/{productID:int}")]
+    //public async Task<ActionResult<ProductDTO>> GetView(int productID)
+    //{
+
+    //}
 }

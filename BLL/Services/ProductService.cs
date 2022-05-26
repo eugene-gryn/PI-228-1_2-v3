@@ -32,6 +32,14 @@ public class ProductService : AService
     public async Task<bool> DeleteProduct(int productID)
     {
         return await Database.Products.Delete(productID);
+    }
 
+
+    public async Task<ProductDTO> ProductViews(int productID)
+    {
+        var product = await Database.Products.Read().FirstOrDefaultAsync(prod => prod.ID == productID);
+        if(product == null) return null;
+        product.Views++;
+        return await GetMainData(productID);
     }
 }
