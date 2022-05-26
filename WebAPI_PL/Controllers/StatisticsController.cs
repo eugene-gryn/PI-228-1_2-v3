@@ -25,7 +25,7 @@ public class StatisticsController : ControllerBase
         _userS = userS;
     }
 
-    [HttpGet("topProductsVisited/count={count:int}")]
+    [HttpGet("topProductsVisited/{count:int}")]
     [AllowAnonymous]
     public async Task<ActionResult<List<ProductDTO>>> ViewProductsTop(uint count)
     {
@@ -48,7 +48,7 @@ public class StatisticsController : ControllerBase
     }
 
 
-    [HttpPost("viewTopSells/count={count:int}")]
+    [HttpPost("viewTopSells/{count:int}")]
     public async Task<ActionResult<UserMainDataDTO>> ViewProduct(uint count)
     {
         var resAdminOrModerator = await UserController.IsUserAdminOrModerator(User, _userS);

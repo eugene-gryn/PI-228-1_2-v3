@@ -1,10 +1,27 @@
+using System.Security.Cryptography;
 using DAL.EF;
 using DAL.Entities;
+using DelegateDecompiler;
 
 namespace BLL;
 
 public class TestWorker
 {
+    public static KeyValuePair<byte[], byte[]> GeneratePassword(string password)
+    {
+        byte[] passwordHash, passwordSalt;
+
+
+        using (var hmac = new HMACSHA512())
+        {
+            passwordSalt = hmac.Key;
+            passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+        }
+
+
+        return new KeyValuePair<byte[], byte[]>(key:passwordHash, value:passwordSalt);
+    }
+
     public TestWorker()
     {
         using (var context = new MainContext())
@@ -58,14 +75,18 @@ public class TestWorker
             context.SaveChanges();
 
 
+            var defaultU = GeneratePassword("default");
+            var moderatorU = GeneratePassword("moderator");
+            var adminU = GeneratePassword("admin");
+
             var users = new List<User>
             {
                 new()
                 {
                     Name = "default",
                     Email = "default@email.com",
-                    PasswordHash = new byte[] {0x00, 0x21, 0x60, 0x1F},
-                    PasswordSalt = new byte[] {0x00, 0x21, 0x60, 0x1F},
+                    PasswordHash = defaultU.Key,
+                    PasswordSalt = defaultU.Value,
                     Cart = new List<ProductAmount>
                         {new() {Product = products[0], Amount = 22}, new() {Product = products[1], Amount = 55}}
                 },
@@ -74,8 +95,8 @@ public class TestWorker
                 {
                     Name = "moderator",
                     Email = "moderator@email.com",
-                    PasswordHash = new byte[] {0x00, 0x21, 0x60, 0x1F},
-                    PasswordSalt = new byte[] {0x00, 0x21, 0x60, 0x1F},
+                    PasswordHash = moderatorU.Key,
+                    PasswordSalt = moderatorU.Value,
                     Cart = new List<ProductAmount>
                         {new() {Product = products[0], Amount = 22}, new() {Product = products[1], Amount = 55}},
                     IsModer = true
@@ -85,8 +106,8 @@ public class TestWorker
                 {
                     Name = "admin",
                     Email = "admin@email.com",
-                    PasswordHash = new byte[] {0x00, 0x21, 0x60, 0x1F},
-                    PasswordSalt = new byte[] {0x00, 0x21, 0x60, 0x1F},
+                    PasswordHash = adminU.Key,
+                    PasswordSalt = adminU.Value,
                     Cart = new List<ProductAmount>
                         {new() {Product = products[0], Amount = 22}, new() {Product = products[1], Amount = 55}},
                     IsAdmin = true

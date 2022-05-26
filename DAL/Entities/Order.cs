@@ -8,7 +8,6 @@ public class Order
     public int ID { get; set; }
     [Required]
     public int UserID { get; set; }
-
     public string DeliveryInfo { get; set; } = string.Empty;
     public bool Processed { get; set; }
     
