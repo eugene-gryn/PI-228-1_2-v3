@@ -83,8 +83,8 @@ public class ProductsController : ControllerBase
         return Forbid("User must be admin or moderator!");
     }
 
-    [HttpPost("updateProduct/{productID:int}")]
-    public async Task<ActionResult<ProductDTO>> UpdateProduct(int id, ProductDTO product)
+    [HttpPost("updateProduct")]
+    public async Task<ActionResult<ProductDTO>> UpdateProduct(ProductDTO product)
     {
         var resAdminOrModerator = await UserController.IsUserAdminOrModerator(User, _userS);
 
