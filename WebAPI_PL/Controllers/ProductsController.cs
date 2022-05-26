@@ -52,12 +52,10 @@ public class ProductsController : ControllerBase
             return NotFound();
         }
 
-        var thisUserID = Utils.GetUserIDFromJWT(User);
-        if (thisUserID == null) return BadRequest("User ID not found.");
+        var isAdminOrModer = await UserController.IsUserAdminOrModerator(User, _userS);
 
-        var thisUser = await _userS.GetMainData((int)thisUserID);
-
-        if(thisUser.IsModer || thisUser.IsAdmin)
+        if (isAdminOrModer == null) return BadRequest("User ID not found.");
+        if (isAdminOrModer.Value)
         {
             await _productS.DeleteProduct(productID);
             return Ok(productData);
@@ -65,7 +63,7 @@ public class ProductsController : ControllerBase
 
         return Forbid("You are not moderator.");
     }
-    [HttpGet("productData/{productID:int}")]
+    //[HttpGet("productData/{productID:int}")]
     //public async Task<ActionResult<ProductDTO>> GetView(int productID)
     //{
 

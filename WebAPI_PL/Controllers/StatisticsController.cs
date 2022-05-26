@@ -16,6 +16,7 @@ public class StatisticsController : ControllerBase
     private readonly StatisticsService _statisticsS;
     private readonly UserService _userS;
 
+
     public StatisticsController(ILogger<StatisticsController> logger, StatisticsService statisticsService,
         UserService userS)
     {
@@ -52,7 +53,7 @@ public class StatisticsController : ControllerBase
     {
         var resAdminOrModerator = await UserController.IsUserAdminOrModerator(User, _userS);
 
-        if (resAdminOrModerator == null) return NotFound();
+        if (resAdminOrModerator == null) return new NotFoundResult();
         if (resAdminOrModerator.Value)
         {
             var list = await _statisticsS.GetMostPurchasedTop(count);
@@ -63,7 +64,7 @@ public class StatisticsController : ControllerBase
             return Ok(list);
         }
 
-        return BadRequest("User must be admin or moderator!");
+        return Forbid("User must be admin or moderator!");
     }
 
     [HttpPost("viewTopSells")]
@@ -71,7 +72,7 @@ public class StatisticsController : ControllerBase
     {
         var resAdminOrModerator = await UserController.IsUserAdminOrModerator(User, _userS);
 
-        if (resAdminOrModerator == null) return NotFound();
+        if (resAdminOrModerator == null) return new NotFoundResult();
         if (resAdminOrModerator.Value)
         {
             var list = await _statisticsS.GetMostPurchased();
@@ -81,6 +82,7 @@ public class StatisticsController : ControllerBase
             return Ok(list);
         }
 
-        return BadRequest("User must be admin or moderator!");
+
+        return Forbid("User must be admin or moderator!");
     }
 }
