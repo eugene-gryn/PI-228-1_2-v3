@@ -20,6 +20,19 @@ public class UserController : ControllerBase
         _userS = userService;
     }
 
+    public async Task<bool?> IsUserAdminOrModer()
+    {
+        var userId = Utils.GetUserIDFromJWT(User);
+
+        if (userId != null)
+        {
+            var user = await _userS.GetMainData(userId.Value);
+
+            if (user != null) return user.IsModer || user.IsAdmin;
+        }
+
+        return null;
+    }
 
     [HttpGet("findByID/{id:int}")]
     public async Task<ActionResult<UserMainDataDTO>> GetMainData(int id)

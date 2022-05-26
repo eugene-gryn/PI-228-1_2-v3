@@ -1,5 +1,7 @@
+using BLL.DTOs;
 using BLL.DTOs.User;
 using BLL.Services;
+using DAL.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,25 +30,31 @@ public class StatisticsController : ControllerBase
     }
 
     [HttpGet("topProductsVisited/{count}"), ValidateAntiForgeryToken, AllowAnonymous]
-    public async Task<ActionResult<UserMainDataDTO>> ViewProductsTop(int count)
+    public async Task<ActionResult<List<ProductDTO>>> ViewProductsTop(uint count)
     {
-        // TODO: return List<Products> { Size = count }
-        throw new NotImplementedException();
+        var list = await _statisticsS.GetMostPurchasedTop(count);
+
+        return Ok(list);
     }
 
     [HttpGet("topProductsVisited"), ValidateAntiForgeryToken, AllowAnonymous]
-    public async Task<ActionResult<UserMainDataDTO>> ViewProductsALL(int id)
+    public async Task<ActionResult<UserMainDataDTO>> ViewProductsAll()
     {
-        // TODO: retrun full List<Products>
-        throw new NotImplementedException();
+        var list = await _statisticsS.GetMostPurchased();
+
+        return Ok(list);
     }
 
 
     [HttpPost("viewTopSells/{count}"), ValidateAntiForgeryToken]
-    public async Task<ActionResult<UserMainDataDTO>> ViewProduct(int count)
+    public async Task<ActionResult<UserMainDataDTO>> ViewProduct(uint count)
     {
-        // TODO: retrun List<Products> { Size = count }
-        throw new NotImplementedException();
+        var list = await _statisticsS.GetMostPurchasedTop(count);
+
+        return Ok(list);
+
+
+
     }
 
     [HttpPost("viewTopSells"), ValidateAntiForgeryToken]

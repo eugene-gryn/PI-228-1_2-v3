@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using BLL.DTOs;
 using DAL.Entities;
 using DAL.UOW;
 
@@ -14,15 +15,6 @@ public class StatisticsService : AService
     {
         return await Database.Products.Read()
             .AsNoTracking().FirstOrDefaultAsync(product => product.ID == id);
-    }
-
-    public async Task<bool> AddView(int productId)
-    {
-        return await ActionWithProduct(productId, product => product.Views++);
-    }
-    public async Task<bool> AddBought(int productId)
-    {
-        return await ActionWithProduct(productId, product => product.Purchase++);
     }
 
     private async Task<bool> ActionWithProduct(int productId, Action<Product> action)
@@ -43,5 +35,50 @@ public class StatisticsService : AService
         }
 
         return false;
+    }
+
+    public async Task<bool> AddView(int productId)
+    {
+        return await ActionWithProduct(productId, product => product.Views++);
+    }
+
+    public async Task<bool> AddBought(int productId)
+    {
+        return await ActionWithProduct(productId, product => product.Purchase++);
+    }
+
+    private async Task<List<Product>> GetProducts(uint? count)
+    {
+        if (count.HasValue) return await Database.Products.Read().Take((int) count.Value).AsNoTracking().ToListAsync();
+        return await Database.Products.Read().AsNoTracking().ToListAsync();
+    }
+
+    private async Task<List<ProductDTO>> GetProductsSpecialSorted(uint? count, Comparison<ProductDTO> comparer)
+    {
+        var list = await GetProducts(count);
+
+        var productDtos = list.Select(product => Mapper.Map<ProductDTO>(product)).ToList();
+
+        productDtos.Sort(comparer);
+
+        return productDtos;
+    }
+
+    public async Task<List<ProductDTO>> GetMostViewed()
+    {
+        return await GetProductsSpecialSorted(null, (dto, productDto) => dto.Views.CompareTo(productDto.Views));
+    }
+    public async Task<List<ProductDTO>> GetMostViewedTop(uint count)
+    {
+        return await GetProductsSpecialSorted(count, (dto, productDto) => dto.Views.CompareTo(productDto.Views));
+    }
+
+    public async Task<List<ProductDTO>> GetMostPurchased()
+    {
+        return await GetProductsSpecialSorted(null, (dto, productDto) => dto.Purchase.CompareTo(productDto.Purchase));
+    }
+    public async Task<List<ProductDTO>> GetMostPurchasedTop(uint count)
+    {
+        return await GetProductsSpecialSorted(count, (dto, productDto) => dto.Purchase.CompareTo(productDto.Purchase));
     }
 }

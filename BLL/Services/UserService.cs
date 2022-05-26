@@ -2,22 +2,24 @@ using BLL.DTOs.User;
 using DAL.Entities;
 using DAL.UOW;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic.CompilerServices;
 
 namespace BLL.Services;
 
 public class UserService : AService
 {
-    public UserService(IUnitOfWork uow) : base(uow) { }
-    
+    public UserService(IUnitOfWork uow) : base(uow)
+    {
+    }
+
     //get user mainData by id/email
     //get user orders
     //get user cart
-    
+
     //bool validate email/id-pass pair
-    
+
     //create / register
     //delete
-
 
     public async Task<UserMainDataDTO?> Create(UserMainDataDTO mainDto)
     {
@@ -30,25 +32,23 @@ public class UserService : AService
     }
 
 
-
     public async Task<UserMainDataDTO?> GetMainData(int userID)
     {
         var user = await Database.Users.Read().AsNoTracking().FirstOrDefaultAsync(usr => usr.ID == userID);
-        
-        if (user == null)return null;
-        return Mapper.Map<UserMainDataDTO>(user);
 
-    }
-    
-    public async Task<UserMainDataDTO?> GetMainData(string userEmail)
-    {
-        var user = await Database.Users.Read().AsNoTracking().FirstOrDefaultAsync(usr => usr.Email.Equals(userEmail));
-        
         if (user == null) return null;
         return Mapper.Map<UserMainDataDTO>(user);
     }
-    
-    
+
+    public async Task<UserMainDataDTO?> GetMainData(string userEmail)
+    {
+        var user = await Database.Users.Read().AsNoTracking().FirstOrDefaultAsync(usr => usr.Email.Equals(userEmail));
+
+        if (user == null) return null;
+        return Mapper.Map<UserMainDataDTO>(user);
+    }
+
+
     public async Task Update(UserMainDataDTO mainDataDto)
     {
         //TODO validate DTO?
@@ -57,5 +57,4 @@ public class UserService : AService
         await Database.Users.Update(user);
         Database.Save();
     }
-
 }
