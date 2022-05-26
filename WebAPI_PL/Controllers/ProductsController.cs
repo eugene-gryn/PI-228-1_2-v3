@@ -31,7 +31,7 @@ public class ProductsController : ControllerBase
     }
 
 
-    [HttpGet("productsPreview")]
+    [HttpGet("productsPreview"), AllowAnonymous]
     public async Task<ActionResult<ProductShortDTO>> GetProducts()
     {
         var list = await _productS.GetProductShortDTOs(null);
@@ -39,7 +39,7 @@ public class ProductsController : ControllerBase
         return Ok(list);
     }
 
-    [HttpGet("productsPreview/{count:int}")]
+    [HttpGet("productsPreview/{count:int}"), AllowAnonymous]
     public async Task<ActionResult<ProductShortDTO>> GetProducts(uint count)
     {
         var list = await _productS.GetProductShortDTOs(count);
@@ -47,7 +47,7 @@ public class ProductsController : ControllerBase
         return Ok(list);
     }
 
-    [HttpGet("productData/{productID:int}")]
+    [HttpGet("productData/{productID:int}"), AllowAnonymous]
     public async Task<ActionResult<ProductDTO>> GetProductData(int productID)
     {
         var res = await _statisticsS.AddView(productID);
@@ -120,7 +120,7 @@ public class ProductsController : ControllerBase
         return Forbid("User must be admin or moderator!");
     }
 
-    [HttpGet("searchProduct/{query}")]
+    [HttpGet("searchProduct/{query}"), AllowAnonymous]
     public async Task<ActionResult<ProductDTO>> SearchProduct(string query)
     {
         var list = await _productS.Search(query);
