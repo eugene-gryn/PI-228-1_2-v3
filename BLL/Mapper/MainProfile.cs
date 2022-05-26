@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BLL.DTOs;
+using BLL.DTOs.Product;
 using BLL.DTOs.User;
 using DAL.Entities;
 
@@ -22,6 +23,11 @@ public class MainProfile : Profile
 
         CreateMap<ProductShortDTO, Product>();
         CreateMap<Product, ProductShortDTO>();
+
+
+        CreateMap<Product, ProductCreateDTO>();
+        CreateMap<ProductCreateDTO, Product>();
+
 
         // Order
         CreateMap<OrderDTO, Order>();

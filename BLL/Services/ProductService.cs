@@ -1,6 +1,7 @@
 ﻿using System.Text.RegularExpressions;
 using Microsoft.EntityFrameworkCore;
 using BLL.DTOs;
+using BLL.DTOs.Product;
 using DAL.Entities;
 using DAL.UOW;
 
@@ -43,7 +44,7 @@ public class ProductService : AService
 
 
 
-    public async Task<ProductDTO?> Create(ProductDTO productDTO)
+    public async Task<ProductDTO?> Create(ProductCreateDTO productDTO)
     {
         var product = Mapper.Map<Product>(productDTO);
 

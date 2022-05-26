@@ -1,4 +1,5 @@
 using BLL.DTOs;
+using BLL.DTOs.Product;
 using BLL.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -64,7 +65,7 @@ public class ProductsController : ControllerBase
 
 
     [HttpPut("createProduct")]
-    public async Task<ActionResult<ProductDTO>> CreateProduct(ProductDTO product)
+    public async Task<ActionResult<ProductDTO>> CreateProduct(ProductCreateDTO product)
     {
         var resAdminOrModerator = await UserController.IsUserAdminOrModerator(User, _userS);
 
