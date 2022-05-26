@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using BLL.DTOs.User;
 using BLL.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -20,13 +21,13 @@ public class UserController : ControllerBase
         _userS = userService;
     }
 
-    public async Task<bool?> IsUserAdminOrModer()
+    public static async Task<bool?> IsUserAdminOrModerator(ClaimsPrincipal User, UserService service)
     {
         var userId = Utils.GetUserIDFromJWT(User);
 
         if (userId != null)
         {
-            var user = await _userS.GetMainData(userId.Value);
+            var user = await service.GetMainData(userId.Value);
 
             if (user != null) return user.IsModer || user.IsAdmin;
         }

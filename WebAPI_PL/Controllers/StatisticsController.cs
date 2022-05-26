@@ -51,6 +51,8 @@ public class StatisticsController : ControllerBase
     {
         var list = await _statisticsS.GetMostPurchasedTop(count);
 
+        //UserController.IsUserAdminOrModerator()
+
         return Ok(list);
 
 
