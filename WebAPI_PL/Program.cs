@@ -45,11 +45,15 @@ namespace WebAPI_PL
                         ValidateAudience = false
                     });
 
+
+            builder.Services.AddAntiforgery();
+
             builder.Services.AddDbContext<MainContext>();
             builder.Services.AddScoped<IUnitOfWork, EFUnitOfWork>();
             builder.Services.AddScoped<UserService>();
             builder.Services.AddScoped<ProductService>();
             builder.Services.AddScoped<OrderService>();
+            builder.Services.AddScoped<StatisticsService>();
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
