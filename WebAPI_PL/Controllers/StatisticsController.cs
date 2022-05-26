@@ -25,11 +25,10 @@ public class StatisticsController : ControllerBase
     }
 
     [HttpGet("topProductsVisited/{count}")]
-    [ValidateAntiForgeryToken]
     [AllowAnonymous]
     public async Task<ActionResult<List<ProductDTO>>> ViewProductsTop(uint count)
     {
-        var list = await _statisticsS.GetMostPurchasedTop(count);
+        var list = await _statisticsS.GetMostViewedTop(count);
 
         _logger.LogInformation($"Top viewed {count} products loaded");
 
@@ -37,11 +36,10 @@ public class StatisticsController : ControllerBase
     }
 
     [HttpGet("topProductsVisited")]
-    [ValidateAntiForgeryToken]
     [AllowAnonymous]
     public async Task<ActionResult<UserMainDataDTO>> ViewProductsAll()
     {
-        var list = await _statisticsS.GetMostPurchased();
+        var list = await _statisticsS.GetMostViewed();
 
         _logger.LogInformation("Top viewed products loaded");
 
@@ -50,7 +48,6 @@ public class StatisticsController : ControllerBase
 
 
     [HttpPost("viewTopSells/{count}")]
-    [ValidateAntiForgeryToken]
     public async Task<ActionResult<UserMainDataDTO>> ViewProduct(uint count)
     {
         var resAdminOrModerator = await UserController.IsUserAdminOrModerator(User, _userS);
@@ -70,7 +67,6 @@ public class StatisticsController : ControllerBase
     }
 
     [HttpPost("viewTopSells")]
-    [ValidateAntiForgeryToken]
     public async Task<ActionResult<UserMainDataDTO>> ViewProduct()
     {
         var resAdminOrModerator = await UserController.IsUserAdminOrModerator(User, _userS);

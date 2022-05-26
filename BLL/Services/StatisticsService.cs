@@ -1,4 +1,4 @@
-﻿using System.Data.Entity;
+﻿using Microsoft.EntityFrameworkCore;
 using BLL.DTOs;
 using DAL.Entities;
 using DAL.UOW;
@@ -49,7 +49,10 @@ public class StatisticsService : AService
 
     private async Task<List<Product>> GetProducts(uint? count)
     {
-        if (count.HasValue) return await Database.Products.Read().Take((int) count.Value).AsNoTracking().ToListAsync();
+        if (count.HasValue && Database.Products.Read().Count().CompareTo((int) count) == 0)
+        {
+            return await Database.Products.Read().Take((int) count.Value).AsNoTracking().ToListAsync();
+        }
         return await Database.Products.Read().AsNoTracking().ToListAsync();
     }
 

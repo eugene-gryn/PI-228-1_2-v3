@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BLL.DTOs;
 using BLL.DTOs.User;
 using DAL.Entities;
 
@@ -8,17 +9,19 @@ public class MainProfile : Profile
 {
     public MainProfile()
     {
-        /*
-        CreateMap<Project, ProjectDTO>();
-        CreateMap<ProjectDTO, Project>();
-        CreateMap<Task, TaskDTO>();
-        CreateMap<TaskDTO, Task>();
-        */
-
+        // User main data
         CreateMap<User, UserMainDataDTO>();
         CreateMap<UserMainDataDTO, User>();
+
+        // User register
         CreateMap<UserRegisterDTO, User>();
 
+        // Product
+        CreateMap<ProductDTO, Product>();
+        CreateMap<Product, ProductDTO>();
 
+        // Order
+        CreateMap<OrderDTO, Order>();
+        CreateMap<Order, OrderDTO>();
     }
 }

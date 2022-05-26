@@ -45,6 +45,9 @@ namespace WebAPI_PL
                         ValidateAudience = false
                     });
 
+
+            builder.Services.AddAntiforgery();
+
             builder.Services.AddDbContext<MainContext>();
             builder.Services.AddScoped<IUnitOfWork, EFUnitOfWork>();
             builder.Services.AddScoped<UserService>();
