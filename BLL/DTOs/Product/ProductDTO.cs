@@ -13,4 +13,7 @@ public class ProductDTO
     [Required]
     public float Price { get; set; }
     public int RemainingStock { get; set; }
+
+    public uint Views { get; set; } = 0;
+    public uint Purchase { get; set; } = 0;
 }
