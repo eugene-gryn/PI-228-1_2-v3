@@ -1,12 +1,10 @@
 using BLL.DTOs;
 using BLL.DTOs.User;
 using BLL.Services;
-using DAL.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI_PL.Controllers;
-
 
 [Route("api/[controller]")]
 [ApiController]
@@ -17,53 +15,76 @@ public class StatisticsController : ControllerBase
 
     private readonly StatisticsService _statisticsS;
     private readonly UserService _userS;
-    private readonly OrderService _orderS;
-    private readonly ProductService _productS;
 
-    public StatisticsController(ILogger<StatisticsController> logger, StatisticsService statisticsService, UserService userS, OrderService orderS, ProductService productS)
+    public StatisticsController(ILogger<StatisticsController> logger, StatisticsService statisticsService,
+        UserService userS)
     {
         _logger = logger;
         _statisticsS = statisticsService;
         _userS = userS;
-        _orderS = orderS;
-        _productS = productS;
     }
 
-    [HttpGet("topProductsVisited/{count}"), ValidateAntiForgeryToken, AllowAnonymous]
+    [HttpGet("topProductsVisited/{count}")]
+    [ValidateAntiForgeryToken]
+    [AllowAnonymous]
     public async Task<ActionResult<List<ProductDTO>>> ViewProductsTop(uint count)
     {
         var list = await _statisticsS.GetMostPurchasedTop(count);
 
+        _logger.LogInformation($"Top viewed {count} products loaded");
+
         return Ok(list);
     }
 
-    [HttpGet("topProductsVisited"), ValidateAntiForgeryToken, AllowAnonymous]
+    [HttpGet("topProductsVisited")]
+    [ValidateAntiForgeryToken]
+    [AllowAnonymous]
     public async Task<ActionResult<UserMainDataDTO>> ViewProductsAll()
     {
         var list = await _statisticsS.GetMostPurchased();
 
+        _logger.LogInformation("Top viewed products loaded");
+
         return Ok(list);
     }
 
 
-    [HttpPost("viewTopSells/{count}"), ValidateAntiForgeryToken]
+    [HttpPost("viewTopSells/{count}")]
+    [ValidateAntiForgeryToken]
     public async Task<ActionResult<UserMainDataDTO>> ViewProduct(uint count)
     {
-        var list = await _statisticsS.GetMostPurchasedTop(count);
+        var resAdminOrModerator = await UserController.IsUserAdminOrModerator(User, _userS);
 
-        //UserController.IsUserAdminOrModerator()
+        if (resAdminOrModerator == null) return NotFound();
+        if (resAdminOrModerator.Value)
+        {
+            var list = await _statisticsS.GetMostPurchasedTop(count);
 
-        return Ok(list);
+            _logger.LogInformation($"Top {count} purchased products loaded");
 
 
+            return Ok(list);
+        }
 
+        return BadRequest("User must be admin or moderator!");
     }
 
-    [HttpPost("viewTopSells"), ValidateAntiForgeryToken]
+    [HttpPost("viewTopSells")]
+    [ValidateAntiForgeryToken]
     public async Task<ActionResult<UserMainDataDTO>> ViewProduct()
     {
-        // TODO: retrun full List<Products>
-        throw new NotImplementedException();
-    }
+        var resAdminOrModerator = await UserController.IsUserAdminOrModerator(User, _userS);
 
+        if (resAdminOrModerator == null) return NotFound();
+        if (resAdminOrModerator.Value)
+        {
+            var list = await _statisticsS.GetMostPurchased();
+
+            _logger.LogInformation("Top purchased products loaded");
+
+            return Ok(list);
+        }
+
+        return BadRequest("User must be admin or moderator!");
+    }
 }

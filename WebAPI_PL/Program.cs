@@ -50,6 +50,7 @@ namespace WebAPI_PL
             builder.Services.AddScoped<UserService>();
             builder.Services.AddScoped<ProductService>();
             builder.Services.AddScoped<OrderService>();
+            builder.Services.AddScoped<StatisticsService>();
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
