@@ -20,6 +20,9 @@ public class MainProfile : Profile
         CreateMap<ProductDTO, Product>();
         CreateMap<Product, ProductDTO>();
 
+        CreateMap<ProductShortDTO, Product>();
+        CreateMap<Product, ProductShortDTO>();
+
         // Order
         CreateMap<OrderDTO, Order>();
         CreateMap<Order, OrderDTO>();

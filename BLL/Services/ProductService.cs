@@ -1,4 +1,4 @@
-﻿using System.Data.Entity;
+﻿using Microsoft.EntityFrameworkCore;
 using BLL.DTOs;
 using DAL.Entities;
 using DAL.UOW;
@@ -8,7 +8,39 @@ namespace BLL.Services;
 public class ProductService : AService
 {
     public ProductService(IUnitOfWork uow) : base(uow) { }
-    
+
+    private async Task<List<Product>> GetProducts(uint? count)
+    {
+        if (count.HasValue && Database.Products.Read().Count() >= count)
+        {
+            return await Database.Products.Read().Take((int)count.Value).AsNoTracking().ToListAsync();
+        }
+        return await Database.Products.Read().AsNoTracking().ToListAsync();
+    }
+
+    public async Task<List<ProductShortDTO>> GetProductShortDTOs(uint? count)
+    {
+        var list = await GetProducts(count);
+
+        return list.Select(product => Mapper.Map<ProductShortDTO>(product)).ToList();
+    }
+    public async Task<List<ProductDTO>> GetProductDTOs(uint? count)
+    {
+        var list = await GetProducts(count);
+
+        return list.Select(product => Mapper.Map<ProductDTO>(product)).ToList();
+    }
+
+    public async Task<ProductDTO?> GetMainData(int productID)
+    {
+        var product = await Database.Products.Read().FirstOrDefaultAsync(prod => prod.ID == productID);
+        if (product == null) return null;
+        return Mapper.Map<ProductDTO?>(product);
+    }
+
+
+
+
 
     public async Task<ProductDTO?> Create(ProductDTO productDTO)
     {
@@ -20,12 +52,23 @@ public class ProductService : AService
         return await GetMainData(product.ID);
     }
 
-    
-    public async Task<ProductDTO?> GetMainData(int productID)
+    public async Task<ProductDTO?> Update(ProductDTO productDTO)
     {
-        var product = await Database.Products.Read().FirstOrDefaultAsync(prod => prod.ID == productID);
-        if (product == null) return null;
-        return Mapper.Map<ProductDTO?>(product);
+        var product = Mapper.Map<Product>(productDTO);
+
+        await Database.Products.Update(product);
+        Database.Save();
+
+        return await GetMainData(product.ID);
+    }
+
+    public async Task<List<ProductShortDTO>?> Search(string query)
+    {
+        var list = await Database.Products.Read().Where(product => product.Name.Contains(query) && product.Description.Contains(query))
+            .AsNoTracking().Select(product => Mapper.Map<ProductShortDTO>(product)).ToListAsync();
+
+
+        return list;
     }
 
 
@@ -35,11 +78,5 @@ public class ProductService : AService
     }
 
 
-    public async Task<ProductDTO> ProductViews(int productID)
-    {
-        var product = await Database.Products.Read().FirstOrDefaultAsync(prod => prod.ID == productID);
-        if(product == null) return null;
-        product.Views++;
-        return await GetMainData(productID);
-    }
+
 }

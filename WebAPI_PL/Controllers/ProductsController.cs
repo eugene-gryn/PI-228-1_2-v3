@@ -1,12 +1,13 @@
 using BLL.DTOs;
 using BLL.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI_PL.Controllers;
 
-
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class ProductsController : ControllerBase
 {
     //Add product
@@ -14,12 +15,13 @@ public class ProductsController : ControllerBase
     //filtration / sort product
     // page with mo info
     private readonly ProductService _productS;
-    private readonly UserService _userS;
 
     /// <summary>
-    /// TODO: При отриманні детальної інформції про продукт повідомлять про перегляд
+    ///     TODO: При отриманні детальної інформції про продукт повідомлять про перегляд
     /// </summary>
     private readonly StatisticsService _statisticsS;
+
+    private readonly UserService _userS;
 
     public ProductsController(ProductService productService, UserService userService, StatisticsService statisticsS)
     {
@@ -29,43 +31,101 @@ public class ProductsController : ControllerBase
     }
 
 
+    [HttpGet("productsPreview")]
+    public async Task<ActionResult<ProductShortDTO>> GetProducts()
+    {
+        var list = await _productS.GetProductShortDTOs(null);
+
+        return Ok(list);
+    }
+
+    [HttpGet("productsPreview/{count:int}")]
+    public async Task<ActionResult<ProductShortDTO>> GetProducts(uint count)
+    {
+        var list = await _productS.GetProductShortDTOs(count);
+
+        return Ok(list);
+    }
+
     [HttpGet("productData/{productID:int}")]
     public async Task<ActionResult<ProductDTO>> GetProductData(int productID)
     {
+        var res = await _statisticsS.AddView(productID);
+
         var productData = await _productS.GetMainData(productID);
 
-        if (productData == null)
-        {
-            return NotFound();
-        }
-        
+        if (productData == null && !res) return NotFound();
+
+
         return Ok(productData);
     }
-    
+
+
+
+
+    [HttpPut("createProduct")]
+    public async Task<ActionResult<ProductDTO>> CreateProduct(ProductDTO product)
+    {
+        var resAdminOrModerator = await UserController.IsUserAdminOrModerator(User, _userS);
+
+        if (resAdminOrModerator == null) return new NotFoundResult();
+        if (resAdminOrModerator.Value)
+        {
+            var result = await _productS.Create(product);
+
+            if (result == null) return NotFound();
+
+            return Ok(product);
+        }
+
+
+        return Forbid("User must be admin or moderator!");
+    }
+
+    [HttpPost("updateProduct/{productID:int}")]
+    public async Task<ActionResult<ProductDTO>> UpdateProduct(int id, ProductDTO product)
+    {
+        var resAdminOrModerator = await UserController.IsUserAdminOrModerator(User, _userS);
+
+        if (resAdminOrModerator == null) return new NotFoundResult();
+        if (resAdminOrModerator.Value)
+        {
+            var res = await _productS.Update(product);
+
+            if (res == null) return NotFound();
+
+            return Ok(res);
+        }
+
+
+        return Forbid("User must be admin or moderator!");
+    }
 
     [HttpDelete("deleteProduct/{productID:int}")]
     public async Task<ActionResult<ProductDTO>> DeleteProduct(int productID)
     {
         var productData = await _productS.GetMainData(productID);
-        if (productData == null)
-        {
-            return NotFound();
-        }
 
-        var isAdminOrModer = await UserController.IsUserAdminOrModerator(User, _userS);
 
-        if (isAdminOrModer == null) return BadRequest("User ID not found.");
-        if (isAdminOrModer.Value)
+        var resAdminOrModerator = await UserController.IsUserAdminOrModerator(User, _userS);
+
+        if (resAdminOrModerator == null) return new NotFoundResult();
+        if (resAdminOrModerator.Value)
         {
             await _productS.DeleteProduct(productID);
             return Ok(productData);
         }
 
-        return Forbid("You are not moderator.");
-    }
-    //[HttpGet("productData/{productID:int}")]
-    //public async Task<ActionResult<ProductDTO>> GetView(int productID)
-    //{
 
-    //}
+        return Forbid("User must be admin or moderator!");
+    }
+
+    [HttpGet("searchProduct/{query}")]
+    public async Task<ActionResult<ProductDTO>> SearchProduct(string query)
+    {
+        var list = await _productS.Search(query);
+
+        return Ok(list);
+    }
+
 }

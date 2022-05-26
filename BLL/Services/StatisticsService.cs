@@ -49,7 +49,7 @@ public class StatisticsService : AService
 
     private async Task<List<Product>> GetProducts(uint? count)
     {
-        if (count.HasValue && Database.Products.Read().Count().CompareTo((int) count) == 0)
+        if (count.HasValue && Database.Products.Read().Count() >= count)
         {
             return await Database.Products.Read().Take((int) count.Value).AsNoTracking().ToListAsync();
         }
