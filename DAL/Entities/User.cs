@@ -25,6 +25,6 @@ public class User
     public ICollection<Order> Orders { get; set; }
     public ICollection<ProductAmount> Cart { get; set; }
     
-    public bool IsAdmin;
-    public bool IsModer;
+    public bool IsAdmin { get; set; }
+    public bool IsModerator { get; set; }
 }

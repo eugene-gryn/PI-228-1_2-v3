@@ -22,4 +22,14 @@ public class MainContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder options)
         => options.UseSqlite($"Data Source={_dbPath}"); //TODO change to MS SQL
+
+    //TODO: Cascade delete
+    //protected override void OnModelCreating(ModelBuilder modelBuilder)
+    //{
+    //    modelBuilder
+    //        .Entity<Blog>()
+    //        .HasOne(e => e.Owner)
+    //        .WithOne(e => e.OwnedBlog)
+    //     !! .OnDelete(DeleteBehavior.ClientCascade);
+    //}
 }

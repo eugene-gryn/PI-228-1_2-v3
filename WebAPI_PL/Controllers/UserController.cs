@@ -29,7 +29,7 @@ public class UserController : ControllerBase
         {
             var user = await service.GetMainData(userId.Value);
 
-            if (user != null) return user.IsModer || user.IsAdmin;
+            if (user != null) return user.IsModerator || user.IsAdmin;
         }
 
         return null;

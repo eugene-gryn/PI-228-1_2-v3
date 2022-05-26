@@ -90,7 +90,7 @@ public class OrdersController : ControllerBase
         if (userID == null) return BadRequest("User ID error.");
 
         var user = await _userService.GetMainData((int)userID);
-        if (user == null || !user.IsModer && !user.IsAdmin)
+        if (user == null || !user.IsModerator && !user.IsAdmin)
         {
             return BadRequest("Forbidden!");
         }

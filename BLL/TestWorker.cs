@@ -99,7 +99,7 @@ public class TestWorker
                     PasswordSalt = moderatorU.Value,
                     Cart = new List<ProductAmount>
                         {new() {Product = products[0], Amount = 22}, new() {Product = products[1], Amount = 55}},
-                    IsModer = true
+                    IsModerator = true
                 },
 
                 new()

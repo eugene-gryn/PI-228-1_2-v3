@@ -75,7 +75,11 @@ public class ProductService : AService
 
     public async Task<bool> DeleteProduct(int productID)
     {
-        return await Database.Products.Delete(productID);
+        var result = await Database.Products.Delete(productID);
+
+        Database.Save();
+
+        return result;
     }
 
 

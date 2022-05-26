@@ -17,7 +17,7 @@ public class UserRepo : IRepository<User>
     {
         item.ID = 0;
         item.IsAdmin = false;
-        item.IsModer = false;
+        item.IsModerator = false;
 
         await _mainContext.AddAsync(item);
         return item;

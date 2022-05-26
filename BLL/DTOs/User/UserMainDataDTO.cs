@@ -22,5 +22,5 @@ public class UserMainDataDTO
     public DateTime TokenExpires { get; set; }
 
     public bool IsAdmin;
-    public bool IsModer;
+    public bool IsModerator;
 }
