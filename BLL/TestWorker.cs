@@ -1,6 +1,5 @@
 using DAL.EF;
 using DAL.Entities;
-using Microsoft.EntityFrameworkCore;
 
 namespace BLL;
 
@@ -13,29 +12,110 @@ public class TestWorker
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
 
-
-            var p1 = new Product {Name = "Computer"};
-            var p2 = new Product {Name = "Laptop"};
-            context.Products.Add(p1);
-            context.Products.Add(p2);
-            context.SaveChanges();
-
-
-            var u1 = new User
+            var products = new List<Product>
             {
-                Name = "TestUser",
-                Email = "test@email.com",
-                PasswordHash = new byte[] {0x00, 0x21, 0x60, 0x1F},
-                PasswordSalt = new byte[] {0x00, 0x21, 0x60, 0x1F},
-                Cart = new List<ProductAmount> {new() {Product = p1, Amount = 22}, new() {Product = p2, Amount = 55}}
+                new()
+                {
+                    Name = "Computer",
+                    Views = (uint) Random.Shared.Next(500),
+                    Purchase = (uint) Random.Shared.Next(500),
+                    Description = "PC",
+                    RemainingStock = Random.Shared.Next(100)
+                },
+
+
+                new()
+                {
+                    Name = "Laptop",
+                    Views = (uint) Random.Shared.Next(500),
+                    Purchase = (uint) Random.Shared.Next(500),
+                    Description = "Portable PC",
+                    RemainingStock = Random.Shared.Next(100)
+                },
+
+
+                new()
+                {
+                    Name = "Phone",
+                    Views = (uint) Random.Shared.Next(500),
+                    Purchase = (uint) Random.Shared.Next(500),
+                    Description = "hand PC",
+                    RemainingStock = Random.Shared.Next(100)
+                },
+
+
+                new()
+                {
+                    Name = "Joker",
+                    Views = (uint) Random.Shared.Next(500),
+                    Purchase = (uint) Random.Shared.Next(500),
+                    Description = "Card from minecraft",
+                    RemainingStock = Random.Shared.Next(100)
+                }
             };
-            context.Users.Add(u1);
+
+            context.Products.AddRange(products);
             context.SaveChanges();
 
 
-            var o1 = new Order
-                {UserID = u1.ID, ProductAmounts = new List<ProductAmount> {new() {Product = p2, Amount = 33}}};
-            context.Orders.Add(o1);
+            var users = new List<User>
+            {
+                new()
+                {
+                    Name = "default",
+                    Email = "default@email.com",
+                    PasswordHash = new byte[] {0x00, 0x21, 0x60, 0x1F},
+                    PasswordSalt = new byte[] {0x00, 0x21, 0x60, 0x1F},
+                    Cart = new List<ProductAmount>
+                        {new() {Product = products[0], Amount = 22}, new() {Product = products[1], Amount = 55}}
+                },
+
+                new()
+                {
+                    Name = "moderator",
+                    Email = "moderator@email.com",
+                    PasswordHash = new byte[] {0x00, 0x21, 0x60, 0x1F},
+                    PasswordSalt = new byte[] {0x00, 0x21, 0x60, 0x1F},
+                    Cart = new List<ProductAmount>
+                        {new() {Product = products[0], Amount = 22}, new() {Product = products[1], Amount = 55}},
+                    IsModer = true
+                },
+
+                new()
+                {
+                    Name = "admin",
+                    Email = "admin@email.com",
+                    PasswordHash = new byte[] {0x00, 0x21, 0x60, 0x1F},
+                    PasswordSalt = new byte[] {0x00, 0x21, 0x60, 0x1F},
+                    Cart = new List<ProductAmount>
+                        {new() {Product = products[0], Amount = 22}, new() {Product = products[1], Amount = 55}},
+                    IsAdmin = true
+                }
+            };
+
+            context.Users.AddRange(users);
+            context.SaveChanges();
+
+
+            var orders = new List<Order>
+            {
+                new()
+                {
+                    UserID = users[0].ID,
+                    ProductAmounts = new List<ProductAmount> {new() {Product = products[0], Amount = 33}}
+                },
+                new()
+                {
+                    UserID = users[1].ID,
+                    ProductAmounts = new List<ProductAmount> {new() {Product = products[1], Amount = 33}}
+                },
+                new()
+                {
+                    UserID = users[2].ID,
+                    ProductAmounts = new List<ProductAmount> {new() {Product = products[2], Amount = 33}}
+                }
+            };
+            context.Orders.AddRange(orders);
             context.SaveChanges();
         }
 
