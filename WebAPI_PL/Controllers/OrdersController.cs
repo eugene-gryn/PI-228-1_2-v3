@@ -14,12 +14,17 @@ public class OrdersController : ControllerBase
 
     private readonly OrderService _orderService;
     private readonly UserService _userService;
+    /// <summary>
+    /// TODO: При офомленні заказу повідомляти статистику про ще одну закупівлю товару
+    /// </summary>
+    private readonly StatisticsService _statisticsS;
 
     
-    public OrdersController(OrderService orderService, UserService userService)
+    public OrdersController(OrderService orderService, UserService userService, StatisticsService statisticsS)
     {
         _orderService = orderService;
         _userService = userService;
+        _statisticsS = statisticsS;
     }
 
     /*

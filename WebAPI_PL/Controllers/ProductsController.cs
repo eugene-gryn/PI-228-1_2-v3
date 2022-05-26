@@ -16,10 +16,16 @@ public class ProductsController : ControllerBase
     private readonly ProductService _productS;
     private readonly UserService _userS;
 
-    public ProductsController(ProductService productService, UserService userService)
+    /// <summary>
+    /// TODO: При отриманні детальної інформції про продукт повідомлять про перегляд
+    /// </summary>
+    private readonly StatisticsService _statisticsS;
+
+    public ProductsController(ProductService productService, UserService userService, StatisticsService statisticsS)
     {
         _productS = productService;
         _userS = userService;
+        _statisticsS = statisticsS;
     }
 
 

@@ -16,37 +16,15 @@ public class StatisticsController : ControllerBase
     private readonly StatisticsService _statisticsS;
     private readonly UserService _userS;
     private readonly OrderService _orderS;
+    private readonly ProductService _productS;
 
-    public StatisticsController(ILogger<StatisticsController> logger, StatisticsService statisticsService, UserService userS, OrderService orderS)
+    public StatisticsController(ILogger<StatisticsController> logger, StatisticsService statisticsService, UserService userS, OrderService orderS, ProductService productS)
     {
         _logger = logger;
         _statisticsS = statisticsService;
         _userS = userS;
         _orderS = orderS;
-    }
-
-    [HttpPost("viewProduct/{id}"), ValidateAntiForgeryToken, AllowAnonymous]
-    public async Task<ActionResult<UserMainDataDTO>> ViewProduct(int id)
-    {
-        // TODO: View Product
-        throw new NotImplementedException();
-    }
-
-    [HttpPost("broughtProduct/productId={productId}&orderId={orderId}"), ValidateAntiForgeryToken]
-    public async Task<ActionResult<UserMainDataDTO>> BroughtProduct(int productId, int orderId)
-    {
-        if (Utils.GetUserIDFromJWT(User) == null)
-        {
-            return BadRequest("Only Authorized users can brought products.");
-        }
-
-        _logger.LogInformation("INFO");
-
-        var dto = await _orderS.GetMainData(orderId);
-
-
-        //TODO: Validate brought
-        throw new NotImplementedException();
+        _productS = productS;
     }
 
     [HttpGet("topProductsVisited/{count}"), ValidateAntiForgeryToken, AllowAnonymous]
