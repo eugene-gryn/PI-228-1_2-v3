@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Text.RegularExpressions;
+using Microsoft.EntityFrameworkCore;
 using BLL.DTOs;
 using DAL.Entities;
 using DAL.UOW;
@@ -64,7 +65,7 @@ public class ProductService : AService
 
     public async Task<List<ProductShortDTO>?> Search(string query)
     {
-        var list = await Database.Products.Read().Where(product => product.Name.Contains(query) && product.Description.Contains(query))
+        var list = await Database.Products.Read().Where(product => product.Name.ToLower().Contains(query.ToLower()) || product.Description.ToLower().Contains(query.ToLower()))
             .AsNoTracking().Select(product => Mapper.Map<ProductShortDTO>(product)).ToListAsync();
 
 
