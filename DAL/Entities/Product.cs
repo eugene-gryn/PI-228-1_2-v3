@@ -13,4 +13,5 @@ public class Product
     public float Price { get; set; }
     public int RemainingStock { get; set; }
 
+
 }

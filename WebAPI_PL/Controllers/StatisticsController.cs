@@ -5,9 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI_PL.Controllers;
 
-/// <summary>
-/// 
-/// </summary>
 
 [Route("api/[controller]")]
 [ApiController]
