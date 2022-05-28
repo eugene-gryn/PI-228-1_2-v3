@@ -1,0 +1,12 @@
+{
+  "Browser": "chrome",
+  "RemoteDriverUrl": "",
+  "Urls": {
+    //силка на наш сайт
+    "StgMAU": ""
+  },
+  "Users": {
+    "TestUser": "test@gmail.com",
+    "TestPassword": "123qweASD"
+  }
+}
