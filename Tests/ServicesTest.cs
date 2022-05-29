@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Tests
 {
-    internal class ProductTest
+    internal class ServicesTest
     {
     }
 }
