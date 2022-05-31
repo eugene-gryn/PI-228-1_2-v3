@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="DAL.EF.MainContext">
+    <Position X="5.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAACAAAQAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAQ=</HashCode>
+      <FileName>EF\MainContext.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAL.Entities.Order">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAAgAAAAAAACBAAIAAAAAAAA=</HashCode>
+      <FileName>Entities\Order.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAL.Entities.Product">
+    <Position X="0.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgQAAAAAAQAggAQAAAAAAAQAAAIAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Product.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAL.Entities.ProductAmount">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAgAAAAAAAAACAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\ProductAmount.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAL.Entities.User">
+    <Position X="2.25" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAGAAEAAQCAAgAAAAAAAIEQACAAAAAAAAAAAIAAgAAA=</HashCode>
+      <FileName>Entities\User.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAL.Repos.OrderRepo">
+    <Position X="7.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAIAAAAgAAEAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Repos\OrderRepo.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="DAL.Repos.ProductRepo">
+    <Position X="9.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAIAAAAgAAEAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Repos\ProductRepo.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="DAL.Repos.UserRepo">
+    <Position X="11" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAIAAAAgAAEAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Repos\UserRepo.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="DAL.UOW.EFUnitOfWork">
+    <Position X="10.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAKAAACEEAAAAAAIAAAAAAAAAAIAAAIAAAAAAAAQ=</HashCode>
+      <FileName>UOW\EFUnitOfWork.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="DAL.Repos.IRepository&lt;T&gt;">
+    <Position X="5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAgAAEAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Repos\IRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="DAL.UOW.IUnitOfWork">
+    <Position X="9" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>UOW\IUnitOfWork.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
