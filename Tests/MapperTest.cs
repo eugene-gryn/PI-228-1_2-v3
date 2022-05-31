@@ -1,12 +1,16 @@
-﻿using System;
+﻿using BLL.DTOs;
+using BLL.DTOs.Product;
+using BLL.DTOs.User;
+using BLL.Mapper;
+using NUnit.Framework;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Tests
 {
-    internal class MapperTest
+
+    public class MapperTest
     {
+        
     }
 }
