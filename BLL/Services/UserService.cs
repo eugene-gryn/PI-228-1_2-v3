@@ -57,4 +57,14 @@ public class UserService : AService
         await Database.Users.Update(user);
         Database.Save();
     }
+    public async Task Remove(int id)
+    {
+        //TODO check if works correct
+        //TODO check if removes correlated info
+        var result = await Database.Users.Delete(id);
+        if (result) Database.Save();
+        else throw new Exception("Something went wrong!"); // TODO Make new Exception
+    }
+
+
 }
