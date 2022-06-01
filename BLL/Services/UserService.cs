@@ -31,8 +31,7 @@ public class UserService : AService
         return await GetMainData(user.Email);
     }
 
-
-    public async Task<UserMainDataDTO?> GetMainData(int userID)
+    public async Task<UserMainDataDTO> GetMainData(int userID)
     {
         var user = await Database.Users.Read().AsNoTracking().FirstOrDefaultAsync(usr => usr.ID == userID);
 

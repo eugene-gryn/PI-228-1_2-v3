@@ -16,6 +16,7 @@ public class MainProfile : Profile
 
         // User register
         CreateMap<UserRegisterDTO, User>();
+        CreateMap<User, UserRegisterDTO>();
 
         // Product
         CreateMap<ProductDTO, Product>();

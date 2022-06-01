@@ -79,7 +79,7 @@ public class UserController : ControllerBase
 
 
     [HttpPost("changePassword/id-{id:int}&password-{password}")]
-    public async Task<ActionResult<UserMainDataDTO>> ChangeUserPassword(int id, string password)
+    public async Task<ActionResult> ChangeUserPassword(int id, string password)
     {
         _logger.LogInformation("[ChangeUserPassword] call");
 
@@ -96,6 +96,8 @@ public class UserController : ControllerBase
                 user.PasswordSalt = userPasswordSalt;
 
                 await _userS.Update(user);
+
+                return Ok();
             }
 
             return BadRequest("User with this id not found!");
@@ -103,7 +105,7 @@ public class UserController : ControllerBase
         return BadRequest("Only authorized admins can change password");
     }
 
-    [HttpPost("changePassword/id-{id:int}&isAdmin-{isAdmin}&isModer-{isModer}")]
+    [HttpPost("changeUserStatus/id-{id:int}&isAdmin-{isAdmin}&isModer-{isModer}")]
     public async Task<ActionResult<UserMainDataDTO>> ChangeUserStatus(int id, bool isAdmin, bool isModer)
     {
         _logger.LogInformation("[ChangeUserStatus] call");
@@ -119,6 +121,9 @@ public class UserController : ControllerBase
                 user.IsModerator = isModer;
 
                 await _userS.Update(user);
+
+                return Ok(user);
+
             }
 
             return BadRequest("User with this id not found!");
@@ -126,7 +131,7 @@ public class UserController : ControllerBase
         return BadRequest("Only authorized admins can change status");
     }
 
-    [HttpPost("changePassword/id-{id:int}")]
+    [HttpPost("removeUser/id-{id:int}")]
     public async Task<ActionResult<UserMainDataDTO>> RemoveUser(int id)
     {
         _logger.LogInformation("[ChangeUserStatus] call");

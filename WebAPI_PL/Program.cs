@@ -4,6 +4,8 @@ using BLL.Services;
 using DAL.EF;
 using DAL.UOW;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
@@ -48,7 +50,10 @@ namespace WebAPI_PL
 
             builder.Services.AddAntiforgery();
 
-            builder.Services.AddDbContext<MainContext>();
+            builder.Services.AddDbContext<MainContext>(optionsBuilder =>
+            {
+                optionsBuilder.UseSqlite(DBContextFactory.GetDBConnectionString());
+            });
             builder.Services.AddScoped<IUnitOfWork, EFUnitOfWork>();
             builder.Services.AddScoped<UserService>();
             builder.Services.AddScoped<ProductService>();
