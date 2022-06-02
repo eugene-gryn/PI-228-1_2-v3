@@ -56,6 +56,8 @@ public class UserService : AService
         await Database.Users.Update(user);
         Database.Save();
     }
+
+    // TODO DELETE -- not working!!
     public async Task Remove(int id)
     {
         //TODO check if works correct

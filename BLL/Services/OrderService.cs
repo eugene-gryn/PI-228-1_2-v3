@@ -45,6 +45,15 @@ public class OrderService : AService
 
         return dict;
     }
+    public async Task<List<OrderDTO>> GetUserOrders(int userID)
+    {
+        var orders = await Database.Orders.Read()
+            .AsNoTracking()
+            .Include(o => o.ProductAmounts)
+            .Where(o => o.UserID == userID).Select(order => Mapper.Map<OrderDTO>(order)).ToListAsync();
+
+        return orders;
+    }
     
     
     public async Task<Dictionary<ProductDTO, int>?> GetCartProducts(int cartUserID)

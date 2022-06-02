@@ -131,7 +131,7 @@ public class UserController : ControllerBase
         return BadRequest("Only authorized admins can change status");
     }
 
-    [HttpPost("removeUser/id-{id:int}")]
+    [HttpDelete("removeUser/id-{id:int}")]
     public async Task<ActionResult<UserMainDataDTO>> RemoveUser(int id)
     {
         _logger.LogInformation("[ChangeUserStatus] call");
