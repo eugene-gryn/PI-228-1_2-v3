@@ -16,12 +16,7 @@ public class ProductsController : ControllerBase
     //filtration / sort product
     // page with mo info
     private readonly ProductService _productS;
-
-    /// <summary>
-    ///     TODO: При отриманні детальної інформції про продукт повідомлять про перегляд
-    /// </summary>
     private readonly StatisticsService _statisticsS;
-
     private readonly UserService _userS;
 
     public ProductsController(ProductService productService, UserService userService, StatisticsService statisticsS)

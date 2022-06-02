@@ -141,6 +141,7 @@ public class UserController : ControllerBase
         {
             try
             {
+                // TODO ADD CASCADE DELETING FROM EXCEPTION
                 await _userS.Remove(id);
             }
             catch (Exception e)

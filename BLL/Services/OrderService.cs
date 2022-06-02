@@ -1,14 +1,15 @@
-﻿using System.Data.Entity;
-using System.Security.Claims;
-using BLL.DTOs;
+﻿using BLL.DTOs;
 using DAL.Entities;
 using DAL.UOW;
+using Microsoft.EntityFrameworkCore;
 
 namespace BLL.Services;
 
 public class OrderService : AService
 {
-    public OrderService(IUnitOfWork uow) : base(uow) { }
+    public OrderService(IUnitOfWork uow) : base(uow)
+    {
+    }
 
 
     public async Task<OrderDTO?> Create(OrderDTO orderDto)
@@ -21,7 +22,7 @@ public class OrderService : AService
         return await GetMainData(order.ID);
     }
 
-    
+
     public async Task<OrderDTO?> GetMainData(int orderID)
     {
         var order = await Database.Orders.Read().AsNoTracking().FirstOrDefaultAsync(ord => ord.ID == orderID);
@@ -38,13 +39,14 @@ public class OrderService : AService
             .FirstOrDefaultAsync(o => o.ID == orderID);
 
         if (order == null) return null;
-        
+
         var dict = order.ProductAmounts.ToDictionary(
-            keySelector: prodAm => Mapper.Map<ProductDTO>(prodAm.Product),
-            elementSelector: prodAm => prodAm.Amount);
+            prodAm => Mapper.Map<ProductDTO>(prodAm.Product),
+            prodAm => prodAm.Amount);
 
         return dict;
     }
+
     public async Task<List<OrderDTO>> GetUserOrders(int userID)
     {
         var orders = await Database.Orders.Read()
@@ -54,8 +56,8 @@ public class OrderService : AService
 
         return orders;
     }
-    
-    
+
+
     public async Task<Dictionary<ProductDTO, int>?> GetCartProducts(int cartUserID)
     {
         var user = await Database.Users.Read()
@@ -66,16 +68,16 @@ public class OrderService : AService
         if (user == null) return null;
 
         var dict = user.Cart.ToDictionary(
-            keySelector: prodAm => Mapper.Map<ProductDTO>(prodAm.Product),
-            elementSelector: prodAm => prodAm.Amount);
+            prodAm => Mapper.Map<ProductDTO>(prodAm.Product),
+            prodAm => prodAm.Amount);
 
         return dict;
     }
-    
-    
+
+
     public async Task<bool> DeleteOrder(int orderID)
     {
-        var success = await Database.Orders.Delete(orderID);//TODO check ProdAmounts also are deleted
+        var success = await Database.Orders.Delete(orderID); //TODO check ProdAmounts also are deleted
         if (success) Database.Save();
 
         return success;
@@ -90,8 +92,9 @@ public class OrderService : AService
         var order = await Database.Orders.Read()
             .Include(o => o.ProductAmounts)
             .FirstOrDefaultAsync(u => u.ID == orderID);
-        if (order == null) return
-            false;
+        if (order == null)
+            return
+                false;
 
         var user = await Database.Users.Read()
             .Include(u => u.Cart)
@@ -105,7 +108,7 @@ public class OrderService : AService
             user.Cart.Remove(productAmount);
             order.ProductAmounts.Add(productAmount);
         }
-        
+
         Database.Save();
         return true;
     }
@@ -115,7 +118,6 @@ public class OrderService : AService
     {
         throw new NotImplementedException();
     }
-
 
 
     public async Task<bool> MarkOrderAsProcessed(int orderID)
@@ -128,9 +130,7 @@ public class OrderService : AService
         order.Processed = true;
         Database.Save();
         return true;
-
     }
-
 
 
     public async Task<bool> AddProductToCart(int cartUserID, int productID, int amount)
@@ -147,12 +147,12 @@ public class OrderService : AService
 
         if (product == null) return false;
 
-        user.Cart.Add(new ProductAmount(){Product = product, Amount = amount});
+        user.Cart.Add(new ProductAmount {Product = product, Amount = amount});
         Database.Save();
         return true;
     }
-    
-    
+
+
     public async Task<bool> DeleteProductFromCart(int cartUserID, int productID)
     {
         var user = await Database.Users.Read()
@@ -168,5 +168,4 @@ public class OrderService : AService
         Database.Save();
         return true;
     }
-
 }
