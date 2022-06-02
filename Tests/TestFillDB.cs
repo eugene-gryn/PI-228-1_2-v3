@@ -1,8 +1,5 @@
-﻿using BLL.Services;
-using DAL.EF;
+﻿using DAL.EF;
 using DAL.Entities;
-using Microsoft.EntityFrameworkCore;
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,31 +8,10 @@ using System.Threading.Tasks;
 
 namespace Tests
 {
-   
-    public class ServicesTest
+    public class TestFillDB
     {
-        private static DbContextOptions<MainContext> dbContextOptions = new DbContextOptionsBuilder<MainContext>()
-            .UseInMemoryDatabase(databaseName: "DbTest")
-            .Options;
-
-        MainContext context;
-
-        [OneTimeSetUp]
-        public void SetUp()
-        {
-            context = new MainContext(dbContextOptions);
-            context.Database.EnsureCreated();
-
-            SeedDatabase();
-        }
-
-        [OneTimeTearDown]
-        public void CleanUp()
-        {
-            context.Database.EnsureDeleted();
-        }
-
-        private void SeedDatabase()
+        private static MainContext context;
+        public static void SeedDatabase()
         {
             var orders = new List<Order>()
             {
