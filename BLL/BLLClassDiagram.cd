@@ -1,35 +1,35 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="BLL.DTOs.OrderDTO">
-    <Position X="15.25" Y="0.5" Width="1.5" />
+    <Position X="13.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAgAAAAAAAAAgAAAAAAACBAAAAAAAAAAA=</HashCode>
       <FileName>DTOs\Order\OrderDTO.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BLL.DTOs.Product.ProductCreateDTO">
-    <Position X="10.5" Y="2.75" Width="1.5" />
+    <Position X="9.5" Y="3" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAQAgAAQAAAAAAAQAAAIAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>DTOs\Product\ProductCreateDTO.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BLL.DTOs.ProductDTO">
-    <Position X="12.25" Y="2.25" Width="1.5" />
+    <Position X="11.25" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AgQAAAAAAQAggAQAAAAAAAQAAAIAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>DTOs\Product\ProductDTO.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BLL.DTOs.ProductShortDTO">
-    <Position X="10.5" Y="0.5" Width="1.5" />
+    <Position X="9.5" Y="1" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAQAAgAQAAAAAAAQAAAIAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>DTOs\Product\ProductShortDTO.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BLL.DTOs.ViewsProductDTO">
-    <Position X="12.25" Y="0.5" Width="1.5" />
+    <Position X="11.25" Y="0.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AgQAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>DTOs\Product\ProductViewsDTO.cs</FileName>
@@ -71,7 +71,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="BLL.Mapper.MainProfile">
-    <Position X="10.5" Y="6.25" Width="1.5" />
+    <Position X="7.25" Y="6" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Mapper\MainProfile.cs</FileName>
@@ -86,30 +86,30 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="BLL.Services.OrderService">
-    <Position X="0.5" Y="6.5" Width="1.5" />
+    <Position X="0.5" Y="6" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAgAAAAAAAAAAAAAAAAEAAAQUBAAEAAEAAAggA=</HashCode>
+      <HashCode>AAAAAAAgAAAAAAAAAAAAAAAAEAAAwUBAAEAAEAAAggA=</HashCode>
       <FileName>Services\OrderService.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BLL.Services.ProductService">
-    <Position X="3" Y="5.25" Width="1.5" />
+    <Position X="3" Y="4.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAIAAAAAAAAAAAAAAAAAgAEAAAAEAAQAAAAAAggAA=</HashCode>
       <FileName>Services\ProductService.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BLL.Services.StatisticsService">
-    <Position X="0.5" Y="3.25" Width="1.5" />
+    <Position X="0.5" Y="2.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAYAEAAAAAABgAAAAAgAEAgAAAAAAARAAAAAAAAAA=</HashCode>
       <FileName>Services\StatisticsService.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BLL.Services.UserService">
-    <Position X="3" Y="3.25" Width="1.5" />
+    <Position X="3" Y="2.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAgAA=</HashCode>
+      <HashCode>AAQAAAAAAAAAAAAAAAAABAAAAAAAAEAAAAAAAAAAgAA=</HashCode>
       <FileName>Services\UserService.cs</FileName>
     </TypeIdentifier>
   </Class>
