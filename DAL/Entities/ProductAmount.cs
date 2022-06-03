@@ -6,6 +6,8 @@ public class ProductAmount
 {
     [Key]
     public int ID { get; set; }
-    public Product Product { get; set; }
-    public int Amount { get; set; }
+    [Required]
+    public int ProductID { get; set; }
+
+    public int Amount { get; set; } = 0;
 }

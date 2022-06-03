@@ -3,6 +3,7 @@ using BLL.DTOs;
 using BLL.DTOs.Product;
 using BLL.DTOs.User;
 using DAL.Entities;
+using static BLL.DTOs.Product.ProductAmountDTO;
 
 namespace BLL.Mapper;
 
@@ -18,7 +19,7 @@ public class MainProfile : Profile
         CreateMap<UserRegisterDTO, User>();
         CreateMap<User, UserRegisterDTO>();
 
-        // Product
+        // ProductID
         CreateMap<ProductDTO, Product>();
         CreateMap<Product, ProductDTO>();
 
@@ -33,5 +34,9 @@ public class MainProfile : Profile
         // Order
         CreateMap<OrderDTO, Order>();
         CreateMap<Order, OrderDTO>();
+
+        // Product Amount
+        CreateMap<ProductAmount, ProductAmountDTO>();
+        CreateMap<ProductAmountDTO, ProductAmount>();
     }
 }
