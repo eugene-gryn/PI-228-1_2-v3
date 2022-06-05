@@ -160,35 +160,9 @@ namespace Tests
                     PasswordHash = user1.Key,
                     PasswordSalt = user1.Value,
                     Cart = new List<ProductAmount>
-                    {new() {Product = products[0], Amount = 22}, new() {Product = products[1], Amount = 55}},
+                    {new() {ProductID = products[0].ID, Amount = 22}, new() {ProductID = products[1].ID, Amount = 55}},
 
                 },
-                new User()
-                {
-                    ID = 2,
-                    Name = "test2",
-                    Email = "test2@gmail.com",
-                    Phone = "+380970000000",
-                    IsAdmin = false,
-                    IsModerator = false,
-                    PasswordHash = user2.Key,
-                    PasswordSalt = user2.Value,
-                    Cart = new List<ProductAmount>
-                    {new() {Product = products[0], Amount = 22}, new() {Product = products[1], Amount = 55}},
-                },
-                new User()
-                {
-                    ID = 3,
-                    Name = "test3",
-                    Email = "test3@gmail.com",
-                    Phone = "+380970000000",
-                    IsAdmin = false,
-                    IsModerator = false,
-                    PasswordHash = user2.Key,
-                    PasswordSalt = user2.Value,
-                    Cart = new List<ProductAmount>
-                    {new() {Product = products[0], Amount = 22}, new() {Product = products[1], Amount = 55}},
-                }
             };
             _context.Users.AddRange(users);
 

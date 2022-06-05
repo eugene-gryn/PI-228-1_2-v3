@@ -64,8 +64,7 @@ public class ProductsController : ControllerBase
     {
         var resAdminOrModerator = await UserController.IsUserAdminOrModerator(User, _userS);
 
-        if (resAdminOrModerator == null) return new NotFoundResult();
-        if (resAdminOrModerator.Value)
+        if (resAdminOrModerator)
         {
             var result = await _productS.Create(product);
 
@@ -83,8 +82,7 @@ public class ProductsController : ControllerBase
     {
         var resAdminOrModerator = await UserController.IsUserAdminOrModerator(User, _userS);
 
-        if (resAdminOrModerator == null) return new NotFoundResult();
-        if (resAdminOrModerator.Value)
+        if (resAdminOrModerator)
         {
             var res = await _productS.Update(product);
 
@@ -105,8 +103,7 @@ public class ProductsController : ControllerBase
 
         var resAdminOrModerator = await UserController.IsUserAdminOrModerator(User, _userS);
 
-        if (resAdminOrModerator == null) return new NotFoundResult();
-        if (resAdminOrModerator.Value)
+        if (resAdminOrModerator)
         {
             await _productS.DeleteProduct(productID);
             return Ok(productData);

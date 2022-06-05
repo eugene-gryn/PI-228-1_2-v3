@@ -37,7 +37,10 @@ public class UserRepo : IRepository<User>
 
     public async Task<bool> Delete(int id)
     {
-        var p = await _mainContext.Users.FindAsync(id);
+        var p = await _mainContext.Users
+            .Include(user => user.Cart)
+            .Include(user => user.Orders)
+            .FirstOrDefaultAsync(user => user.ID == id);
         if (p == null) return false;
         
         _mainContext.Users.Remove(p);

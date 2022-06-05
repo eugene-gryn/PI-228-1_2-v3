@@ -21,7 +21,7 @@ public class UserController : ControllerBase
         _userS = userService;
     }
 
-    public static async Task<bool?> IsUserAdminOrModerator(ClaimsPrincipal User, UserService service)
+    public static async Task<bool> IsUserAdminOrModerator(ClaimsPrincipal User, UserService service)
     {
         var userId = Utils.GetUserIDFromJWT(User);
 
@@ -32,10 +32,10 @@ public class UserController : ControllerBase
             if (user != null) return user.IsModerator || user.IsAdmin;
         }
 
-        return null;
+        return false;
     }
 
-    private async Task<bool?> IsUserAdmin()
+    private async Task<bool> IsUserAdmin()
     {
         var userId = Utils.GetUserIDFromJWT(User);
 
@@ -43,10 +43,10 @@ public class UserController : ControllerBase
         {
             var user = await _userS.GetMainData(userId.Value);
 
-            if (user != null) return user.IsAdmin;
+            return user.IsAdmin;
         }
 
-        return null;
+        return false;
     }
 
 
@@ -84,7 +84,7 @@ public class UserController : ControllerBase
         _logger.LogInformation("[ChangeUserPassword] call");
 
         var isAdmin = await IsUserAdmin();
-        if (isAdmin != null && isAdmin.Value)
+        if (isAdmin)
         {
             var user = await _userS.GetMainData(id);
 
@@ -111,7 +111,7 @@ public class UserController : ControllerBase
         _logger.LogInformation("[ChangeUserStatus] call");
 
         var isAdminRequest = await IsUserAdmin();
-        if (isAdminRequest != null && isAdminRequest.Value)
+        if (isAdminRequest)
         {
             var user = await _userS.GetMainData(id);
 
@@ -134,11 +134,12 @@ public class UserController : ControllerBase
     [HttpDelete("removeUser/id-{id:int}")]
     public async Task<ActionResult<UserMainDataDTO>> RemoveUser(int id)
     {
-        _logger.LogInformation("[ChangeUserStatus] call");
+        _logger.LogInformation("[RemoveUser] call");
 
         var isAdminRequest = await IsUserAdmin();
-        if (isAdminRequest != null && isAdminRequest.Value)
+        if (isAdminRequest)
         {
+            var user = await _userS.GetMainData(id);
             try
             {
                 // TODO ADD CASCADE DELETING FROM EXCEPTION
@@ -148,6 +149,8 @@ public class UserController : ControllerBase
             {
                 return BadRequest(e.Message);
             }
+
+            return Ok(user);
         }
         return BadRequest("Only authorized admins can change status");
     }
