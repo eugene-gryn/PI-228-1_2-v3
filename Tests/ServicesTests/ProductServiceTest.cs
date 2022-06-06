@@ -28,11 +28,11 @@ namespace Tests.Services
         [Test]
         public void Getproduct_ReturnProduct()
         {
-            List<ProductDTO> products = new List<ProductDTO>();
+            ProductShortDTO product = new ProductShortDTO();
 
-            products.Add(new ProductDTO());
+            _repos.GetProductShortDTOs(1);
 
-            Assert.IsFalse(products.Contains(new ProductDTO()));
+            Assert.IsNotNull(product);
 
         }
         [Test]

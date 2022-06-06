@@ -116,7 +116,6 @@ namespace Tests.Services
             Assert.IsNotNull(cart);
             EndOperation();
         }
-        /**/
         [Test]
         public void MarkOrderAsProcessed_IsProcesed()
         {
