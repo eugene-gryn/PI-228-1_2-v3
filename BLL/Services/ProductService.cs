@@ -41,9 +41,6 @@ public class ProductService : AService
     }
 
 
-
-
-
     public async Task<ProductDTO?> Create(ProductCreateDTO productDTO)
     {
         var product = Mapper.Map<Product>(productDTO);
