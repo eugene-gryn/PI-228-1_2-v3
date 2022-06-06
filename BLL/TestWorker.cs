@@ -89,7 +89,7 @@ public class TestWorker
                 PasswordHash = defaultU.Key,
                 PasswordSalt = defaultU.Value,
                 Cart = new List<ProductAmount>
-                    {new() {Product = products[0], Amount = 22}, new() {Product = products[1], Amount = 55}}
+                    {new() {ProductID = products[0].ID, Amount = 22}, new() {ProductID = products[1].ID, Amount = 55}}
             },
 
             new()
@@ -99,7 +99,7 @@ public class TestWorker
                 PasswordHash = moderatorU.Key,
                 PasswordSalt = moderatorU.Value,
                 Cart = new List<ProductAmount>
-                    {new() {Product = products[0], Amount = 22}, new() {Product = products[1], Amount = 55}},
+                    {new() {ProductID = products[0].ID, Amount = 22}, new() {ProductID = products[1].ID, Amount = 55}},
                 IsModerator = true
             },
 
@@ -110,7 +110,7 @@ public class TestWorker
                 PasswordHash = adminU.Key,
                 PasswordSalt = adminU.Value,
                 Cart = new List<ProductAmount>
-                    {new() {Product = products[0], Amount = 22}, new() {Product = products[1], Amount = 55}},
+                    {new() {ProductID = products[0].ID, Amount = 22}, new() {ProductID = products[1].ID, Amount = 55}},
                 IsAdmin = true
             }
         };
@@ -124,17 +124,17 @@ public class TestWorker
             new()
             {
                 UserID = users[0].ID,
-                ProductAmounts = new List<ProductAmount> {new() {Product = products[0], Amount = 33}}
+                ProductAmounts = new List<ProductAmount> {new() {ProductID = products[0].ID, Amount = 33}}
             },
             new()
             {
                 UserID = users[1].ID,
-                ProductAmounts = new List<ProductAmount> {new() {Product = products[1], Amount = 33}}
+                ProductAmounts = new List<ProductAmount> {new() {ProductID = products[1].ID, Amount = 33}}
             },
             new()
             {
                 UserID = users[2].ID,
-                ProductAmounts = new List<ProductAmount> {new() {Product = products[2], Amount = 33}}
+                ProductAmounts = new List<ProductAmount> {new() {ProductID = products[2].ID, Amount = 33}}
             }
         };
         context.Orders.AddRange(orders);
@@ -143,7 +143,7 @@ public class TestWorker
 
         /*using (var context = new MainContext())
         {
-            var user = context.Users.Include(u => u.Cart).ThenInclude(pa => pa.Product).First();
+            var user = context.Users.Include(u => u.Cart).ThenInclude(pa => pa.ProductID).First();
             Console.WriteLine($"Name: {user.Name}");
 
             var cart = user.Cart;
@@ -152,7 +152,7 @@ public class TestWorker
             Console.WriteLine($"Count in cart: {cart.Count}");
 
 
-            foreach (var pa in cart) Console.WriteLine($"    {pa.Product.Name}: {pa.Amount} шт.");
+            foreach (var pa in cart) Console.WriteLine($"    {pa.ProductID.Name}: {pa.Amount} шт.");
         }*/
     }
 }

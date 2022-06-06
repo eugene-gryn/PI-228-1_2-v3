@@ -53,8 +53,7 @@ public class StatisticsController : ControllerBase
     {
         var resAdminOrModerator = await UserController.IsUserAdminOrModerator(User, _userS);
 
-        if (resAdminOrModerator == null) return new NotFoundResult();
-        if (resAdminOrModerator.Value)
+        if (resAdminOrModerator)
         {
             var list = await _statisticsS.GetMostPurchasedTop(count);
 
@@ -72,8 +71,7 @@ public class StatisticsController : ControllerBase
     {
         var resAdminOrModerator = await UserController.IsUserAdminOrModerator(User, _userS);
 
-        if (resAdminOrModerator == null) return new NotFoundResult();
-        if (resAdminOrModerator.Value)
+        if (resAdminOrModerator)
         {
             var list = await _statisticsS.GetMostPurchased();
 

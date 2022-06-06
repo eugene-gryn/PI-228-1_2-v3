@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using BLL.DTOs.Product;
 
 namespace BLL.DTOs;
 
@@ -11,4 +12,6 @@ public class OrderDTO
     public string DeliveryInfo { get; set; } = string.Empty;
     
     public bool Processed;
+
+    public List<ProductAmountDTO> ProductAmounts { get; set; }
 }

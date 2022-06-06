@@ -26,12 +26,6 @@ public class ProductService : AService
 
         return list.Select(product => Mapper.Map<ProductShortDTO>(product)).ToList();
     }
-    public async Task<List<ProductDTO>> GetProductDTOs(uint? count)
-    {
-        var list = await GetProducts(count);
-
-        return list.Select(product => Mapper.Map<ProductDTO>(product)).ToList();
-    }
 
     public async Task<ProductDTO?> GetMainData(int productID)
     {

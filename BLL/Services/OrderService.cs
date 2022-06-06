@@ -1,4 +1,5 @@
 ﻿using BLL.DTOs;
+using BLL.DTOs.Product;
 using DAL.Entities;
 using DAL.UOW;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,10 @@ public class OrderService : AService
     {
     }
 
+    private ProductDTO? GetProduct(int index)
+    {
+       return Mapper.Map<ProductDTO>(Database.Products.Read().FirstOrDefault(prod => prod.ID == index));
+    }
 
     public async Task<OrderDTO?> Create(OrderDTO orderDto)
     {
@@ -25,13 +30,17 @@ public class OrderService : AService
 
     public async Task<OrderDTO?> GetMainData(int orderID)
     {
-        var order = await Database.Orders.Read().AsNoTracking().FirstOrDefaultAsync(ord => ord.ID == orderID);
+        var order = await Database.Orders.Read()
+            .AsNoTracking()
+            .Include(ord => ord.ProductAmounts)
+            .FirstOrDefaultAsync(ord => ord.ID == orderID);
         if (order == null) return null;
+
         return Mapper.Map<OrderDTO>(order);
     }
 
 
-    public async Task<Dictionary<ProductDTO, int>?> GetOrderProducts(int orderID)
+    public async Task<List<ProductAmountDTO>> GetOrderProducts(int orderID)
     {
         var order = await Database.Orders.Read()
             .AsNoTracking()
@@ -40,25 +49,29 @@ public class OrderService : AService
 
         if (order == null) return null;
 
-        var dict = order.ProductAmounts.ToDictionary(
-            prodAm => Mapper.Map<ProductDTO>(prodAm.Product),
-            prodAm => prodAm.Amount);
+        var orderDtos = order.ProductAmounts.Select(amount =>
+        {
+            var dto = Mapper.Map<ProductAmountDTO>(amount);
+            dto.ProductDto = GetProduct(dto.ProductID);
+            return dto;
+        }).ToList();
 
-        return dict;
+        return orderDtos;
     }
 
-    public async Task<List<OrderDTO>> GetUserOrders(int userID)
+    public async Task<List<OrderDTO>?> GetUserOrders(int userID)
     {
         var orders = await Database.Orders.Read()
             .AsNoTracking()
             .Include(o => o.ProductAmounts)
-            .Where(o => o.UserID == userID).Select(order => Mapper.Map<OrderDTO>(order)).ToListAsync();
+            .Where(o => o.UserID == userID)
+            .Select(order => Mapper.Map<OrderDTO>(order)).ToListAsync();
 
         return orders;
     }
 
 
-    public async Task<Dictionary<ProductDTO, int>?> GetCartProducts(int cartUserID)
+    public async Task<List<ProductAmountDTO>?> GetCartProducts(int cartUserID)
     {
         var user = await Database.Users.Read()
             .AsNoTracking()
@@ -67,11 +80,14 @@ public class OrderService : AService
 
         if (user == null) return null;
 
-        var dict = user.Cart.ToDictionary(
-            prodAm => Mapper.Map<ProductDTO>(prodAm.Product),
-            prodAm => prodAm.Amount);
+        var cartDto = user.Cart.Select(amount =>
+        {
+            var dto = Mapper.Map<ProductAmountDTO>(amount);
+            dto.ProductDto = GetProduct(dto.ProductID);
+            return dto;
+        }).ToList();
 
-        return dict;
+        return cartDto;
     }
 
 
@@ -147,7 +163,7 @@ public class OrderService : AService
 
         if (product == null) return false;
 
-        user.Cart.Add(new ProductAmount {Product = product, Amount = amount});
+        user.Cart.Add(new ProductAmount {ProductID = product.ID, Amount = amount});
         Database.Save();
         return true;
     }
@@ -161,7 +177,7 @@ public class OrderService : AService
 
         if (user == null) return false;
 
-        var product = user.Cart.FirstOrDefault(pa => pa.Product.ID == productID);
+        var product = user.Cart.FirstOrDefault(pa => pa.ProductID == productID);
         if (product == null) return false;
 
         user.Cart.Remove(product);
