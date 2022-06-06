@@ -31,7 +31,7 @@ namespace Tests
             order.DeliveryInfo = "Test";
             order.Processed = true;
 
-            Assert.IsNotEmpty((System.Collections.IEnumerable)order);
+            Assert.IsNotNull(order);
         }
         [Test]
         public void CreateProductCreateDTO_IsNotNull()
@@ -100,7 +100,7 @@ namespace Tests
             product.Views = 0;
             product.Purchase = 0;
 
-            Assert.IsNotEmpty((System.Collections.IEnumerable)product);
+            Assert.IsNotNull(product);
         }
         [Test]
         public void CreateUserCartDTO_IsNotNull()
@@ -177,7 +177,7 @@ namespace Tests
             user.IsModerator = true;
             user.IsAdmin = true;
 
-            Assert.IsNotEmpty((System.Collections.IEnumerable)user);
+            Assert.IsNotNull(user);
         }
     }
 }
